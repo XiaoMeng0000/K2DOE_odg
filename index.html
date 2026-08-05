@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="坎巴拉太空计划2D:轨道工程师 —— 2D 轨道力学太空沙盒游戏官网 | Kerbal Space Program 2D: Orbit Engineer official site">
+    <meta name="theme-color" content="#000000">
+    <title>KSP2D:OE | 坎巴拉太空计划2D:轨道工程师</title>
+    <!-- 字体：Share Tech Mono（KSP2 HUD 风格等宽字体） -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <!-- 星空背景（Canvas 渲染层，由 src/modules/starfield.js 驱动） -->
+    <canvas id="starfield" aria-hidden="true"></canvas>
+
+    <!-- 顶部 HUD 导航栏 -->
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="#hero">
+                <img id="brand-logo" src="assets/images/logo.png" alt="KSP2D:OE logo">
+                <span class="brand-name">KSP2D:OE</span>
+            </a>
+            <nav class="main-nav" aria-label="主导航">
+                <ul id="nav-links"></ul>
+                <button id="lang-switch" class="lang-switch" type="button" aria-label="切换语言">EN</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- 板块一：公测倒计时 Hero（极简：仅倒计时 + 标签） -->
+        <section id="hero" class="section hero">
+            <div class="countdown-panel" id="countdown-panel">
+                <p class="countdown-label" id="countdown-label">距离公测开启还有</p>
+                <div class="countdown-grid">
+                    <div class="countdown-unit">
+                        <span class="countdown-value" id="cd-days">00</span>
+                        <span class="countdown-unit-label" id="cd-days-label">天</span>
+                    </div>
+                    <span class="countdown-sep">:</span>
+                    <div class="countdown-unit">
+                        <span class="countdown-value" id="cd-hours">00</span>
+                        <span class="countdown-unit-label" id="cd-hours-label">时</span>
+                    </div>
+                    <span class="countdown-sep">:</span>
+                    <div class="countdown-unit">
+                        <span class="countdown-value" id="cd-minutes">00</span>
+                        <span class="countdown-unit-label" id="cd-minutes-label">分</span>
+                    </div>
+                    <span class="countdown-sep">:</span>
+                    <div class="countdown-unit">
+                        <span class="countdown-value" id="cd-seconds">00</span>
+                        <span class="countdown-unit-label" id="cd-seconds-label">秒</span>
+                    </div>
+                </div>
+                <!-- 已过公测时间时显示（倒计时归零冻结） -->
+                <div class="launched-msg" id="launched-msg" hidden>
+                    <p class="launched-title"></p>
+                    <p class="launched-sub"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块二：游戏简介 -->
+        <section id="about" class="section about">
+            <div class="section-inner reveal">
+                <div class="section-head" id="about-head">
+                    <h2 class="section-title"><span class="hash">##</span><span class="t">游戏简介</span></h2>
+                    <span class="section-tag">// ABOUT</span>
+                </div>
+                <p class="section-body" id="about-body"></p>
+            </div>
+        </section>
+
+        <!-- 板块三：游戏特色（实机画面，左右交替） -->
+        <section id="features" class="section features">
+            <div class="section-inner">
+                <div class="section-head reveal" id="features-head">
+                    <h2 class="section-title"><span class="hash">##</span><span class="t">游戏特色</span></h2>
+                    <span class="section-tag">// FEATURES</span>
+                </div>
+                <p class="section-intro reveal" id="features-intro"></p>
+                <div class="features-list" id="features-list"></div>
+            </div>
+        </section>
+
+        <!-- 板块四：公测需知 -->
+        <section id="notices" class="section notices">
+            <div class="section-inner">
+                <div class="section-head reveal" id="notices-head">
+                    <h2 class="section-title"><span class="hash">##</span><span class="t">公测需知</span></h2>
+                    <span class="section-tag">// OPEN BETA NOTICE</span>
+                </div>
+                <p class="section-intro reveal" id="notices-intro"></p>
+                <ul class="notices-list reveal" id="notices-list"></ul>
+            </div>
+        </section>
+
+        <!-- 板块五：联系渠道 -->
+        <section id="contact" class="section contact">
+            <div class="section-inner">
+                <div class="section-head reveal" id="contact-head">
+                    <h2 class="section-title"><span class="hash">##</span><span class="t">联系渠道</span></h2>
+                    <span class="section-tag">// CONTACT</span>
+                </div>
+                <p class="section-intro reveal" id="contact-note"></p>
+                <div class="contact-grid" id="contact-grid"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span class="footer-brand" id="footer-brand">KSP2D:OE</span>
+            <span class="footer-version" id="footer-version">v0.2.3</span>
+            <span class="footer-copy" id="footer-copy"></span>
+            <span class="footer-note" id="footer-note"></span>
+        </div>
+    </footer>
+
+    <noscript>
+        <p class="noscript-warn">本页面需要启用 JavaScript 才能完整展示内容。</p>
+    </noscript>
+
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>
