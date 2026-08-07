@@ -12,6 +12,7 @@ export const CONTENT_EN = {
             { id: 'about', label: 'ABOUT' },
             { id: 'features', label: 'FEATURES' },
             { id: 'notices', label: 'NOTICES' },
+            { id: 'legal', label: 'COPYRIGHT' },
             { id: 'contact', label: 'CONTACT' },
         ],
         langSwitchTo: '中文',
@@ -93,7 +94,46 @@ export const CONTENT_EN = {
         ],
     },
 
-    // —— Section 5: Contact ——
+    // —— Section 5: Copyright Notice ——
+    legal: {
+        title: 'Copyright Notice',
+        tag: '// LEGAL NOTICE',
+        blocks: [
+            {
+                id: 'positioning',
+                label: '// PROJECT POSITIONING',
+                lines: [
+                    'KSP 2D: Orbit Engineer is a fan-made (unofficial) 2D orbital engineering game, paying tribute to the classic Kerbal Space Program series.',
+                    'This project is independently developed by the [Escape Velocity] team and has no affiliation with the original developers.',
+                ],
+            },
+            {
+                id: 'sources',
+                label: '// RESOURCE SOURCE STATEMENT',
+                lines: [
+                    'Some art assets, audio assets, names, and gameplay inspiration in this game are derived from the Kerbal Space Program series.',
+                    'The intellectual property of the above content belongs to its respective owners (Squad / Intercept Games / Private Division, etc.).',
+                ],
+            },
+            {
+                id: 'usage',
+                label: '// COPYRIGHT & USAGE',
+                lines: [
+                    'This project is for learning, communication, and technical research only, and is not used for any commercial purposes.',
+                    'We respect and support the copyright of the original works. Should the copyright holders have any concerns about the use of related resources, please reach out via the in-game feedback channel and we will address them promptly.',
+                ],
+            },
+            {
+                id: 'original',
+                label: '// ORIGINAL CONTENT',
+                lines: [
+                    'Apart from the third-party resources mentioned above, the original code and original art of this project are reserved by the [Escape Velocity] team.',
+                ],
+            },
+        ],
+    },
+
+    // —— Section 6: Contact ——
     contact: {
         title: 'Contact Us',
         tag: '// CONTACT',

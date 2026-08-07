@@ -93,6 +93,27 @@ function renderNotices(c) {
     });
 }
 
+// 渲染版权声明（每个 block：一个 // 注释标签 + 若干正文行）
+function renderLegal(c) {
+    document.querySelector('#legal-head .t').textContent = c.legal.title;
+    document.querySelector('#legal-head .section-tag').textContent = c.legal.tag;
+
+    const blocks = document.getElementById('legal-blocks');
+    blocks.textContent = '';
+
+    c.legal.blocks.forEach((block) => {
+        const blockEl = el('article', 'legal-block reveal');
+        blockEl.appendChild(el('span', 'legal-label', block.label));
+
+        const lines = el('div', 'legal-lines');
+        block.lines.forEach((line) => {
+            lines.appendChild(el('p', 'legal-line', line));
+        });
+        blockEl.appendChild(lines);
+        blocks.appendChild(blockEl);
+    });
+}
+
 // 渲染联系渠道
 function renderContact(c) {
     document.querySelector('#contact-head .t').textContent = c.contact.title;
@@ -132,6 +153,7 @@ export function renderAll() {
     renderAbout(c);
     renderFeatures(c);
     renderNotices(c);
+    renderLegal(c);
     renderContact(c);
     renderFooter(c);
 }
