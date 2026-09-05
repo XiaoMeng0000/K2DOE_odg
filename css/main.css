@@ -592,6 +592,37 @@ main,
     letter-spacing: 0.14em;
 }
 
+/* 一键复制按钮（协议链接失效时的兜底入口） */
+.contact-copy {
+    align-self: flex-start;
+    margin-top: 8px;
+    padding: 5px 14px;
+    background: transparent;
+    color: var(--line-hud);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    border: 1px solid var(--line-dim);
+    cursor: pointer;
+    transition: color 0.25s ease, background 0.25s ease,
+        border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-copy:hover {
+    color: #000000;
+    background: var(--line-hud);
+    box-shadow: var(--glow-cyan);
+}
+
+/* 复制成功：短暂切换为绿色"已复制" */
+.contact-copy.is-copied {
+    color: var(--green-ok);
+    border-color: var(--green-ok);
+    background: rgba(0, 255, 136, 0.08);
+    text-shadow: var(--glow-green);
+    box-shadow: none;
+}
+
 /* —— 页脚 —— */
 .footer {
     border-top: 1px dashed var(--line-dim);
@@ -717,5 +748,231 @@ main,
     .section-head {
         flex-direction: column;
         gap: 6px;
+    }
+}
+
+/* ==========================================================================
+   0.2.4 官网改版新增样式
+   —— 正式运营状态卡 / CTA 按钮 / 版本动态时间线 / 无图特色卡 / 页脚 dev 小标
+   ========================================================================== */
+
+/* —— 正式运营状态（倒计时冻结后）：隐藏计时区，仅显示状态卡 —— */
+.countdown-panel.is-launched .countdown-label,
+.countdown-panel.is-launched .countdown-grid {
+    display: none;
+}
+
+/* 状态卡去掉原有"顶部虚线分隔"样式，直接作为 Hero 主体 */
+.countdown-panel.is-launched .launched-msg {
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+}
+
+/* 标题提升为页面主标题 */
+.launched-title {
+    font-size: clamp(2.4rem, 8vw, 4.2rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+}
+
+/* 版本行：青色小字，位于标题与副文之间 */
+.launched-version {
+    margin-top: 14px;
+    color: var(--line-hud);
+    font-size: 0.95rem;
+    letter-spacing: 0.22em;
+    text-shadow: var(--glow-cyan);
+}
+
+.launched-sub {
+    margin-top: 12px;
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--text-dim);
+    max-width: 720px;
+}
+
+/* —— CTA 按钮组（Hero 正式运营态） —— */
+.launched-cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 36px;
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 13px 38px;
+    font-family: var(--font-mono);
+    font-size: 1.02rem;
+    letter-spacing: 0.16em;
+    text-align: center;
+    border: 1px solid var(--line-hud);
+    color: var(--line-hud);
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.25s ease, background 0.25s ease,
+        border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cta-btn:hover {
+    background: var(--line-hud);
+    color: #000000;
+    box-shadow: var(--glow-cyan);
+}
+
+/* 主按钮（立即试玩）：绿色强调 */
+.cta-primary {
+    border-color: var(--green-ok);
+    color: var(--green-ok);
+    text-shadow: var(--glow-green);
+}
+
+.cta-primary:hover {
+    background: var(--green-ok);
+    border-color: var(--green-ok);
+    color: #000000;
+    text-shadow: none;
+    box-shadow: var(--glow-green);
+}
+
+/* —— 板块四：版本动态（时间线卡片） —— */
+.updates {
+    border-top: 1px dashed var(--line-dim);
+}
+
+.updates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 920px;
+}
+
+.update-card {
+    padding: 22px 26px;
+    background: var(--bg-panel-soft);
+    border: 1px solid var(--line-dim);
+    border-left: 3px solid var(--line-hud);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.update-card:hover {
+    border-color: var(--line-hud);
+    box-shadow: inset 0 0 40px rgba(0, 20, 40, 0.35), var(--glow-cyan);
+}
+
+.update-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.update-version {
+    color: var(--green-ok);
+    font-size: 0.92rem;
+    letter-spacing: 0.1em;
+    text-shadow: var(--glow-green);
+}
+
+.update-date {
+    color: var(--text-weak);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+}
+
+.update-title {
+    margin-top: 6px;
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    color: var(--text-main);
+}
+
+.update-items {
+    margin-top: 12px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.update-items li {
+    position: relative;
+    padding-left: 20px;
+    color: var(--text-main);
+    font-size: 0.96rem;
+    line-height: 1.75;
+}
+
+.update-items li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--line-hud);
+}
+
+/* —— 无图特色卡矩阵 —— */
+.feature-matrix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.feature-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 26px 24px;
+    background: var(--bg-panel-soft);
+    border: 1px solid var(--line-dim);
+    border-top: 2px solid var(--line-hud);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: var(--line-hud);
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-4px);
+}
+
+.feature-card .feature-title {
+    font-size: 1.3rem;
+}
+
+.feature-card .feature-desc {
+    font-size: 0.95rem;
+    margin-top: 0;
+}
+
+/* —— 页脚 dev 版本小标 —— */
+.footer-dev {
+    color: var(--orange-data);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+}
+
+/* —— 新增样式响应式 —— */
+@media (max-width: 900px) {
+    .feature-matrix {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .feature-matrix {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-btn {
+        width: 100%;
+        padding: 12px 20px;
+    }
+
+    .update-card {
+        padding: 18px 16px;
     }
 }

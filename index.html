@@ -58,10 +58,12 @@
                         <span class="countdown-unit-label" id="cd-seconds-label">秒</span>
                     </div>
                 </div>
-                <!-- 已过公测时间时显示（倒计时归零冻结） -->
+                <!-- 已过公测时间后进入正式运营状态（倒计时冻结，显示标题+版本行+CTA 入口） -->
                 <div class="launched-msg" id="launched-msg" hidden>
                     <p class="launched-title"></p>
+                    <p class="launched-version" id="launched-version"></p>
                     <p class="launched-sub"></p>
+                    <div class="launched-cta" id="launched-cta"></div>
                 </div>
             </div>
         </section>
@@ -89,7 +91,19 @@
             </div>
         </section>
 
-        <!-- 板块四：公测需知 -->
+        <!-- 板块四：版本动态 -->
+        <section id="updates" class="section updates">
+            <div class="section-inner">
+                <div class="section-head reveal" id="updates-head">
+                    <h2 class="section-title"><span class="hash">##</span><span class="t">版本动态</span></h2>
+                    <span class="section-tag">// UPDATES</span>
+                </div>
+                <p class="section-intro reveal" id="updates-intro"></p>
+                <div class="updates-list" id="updates-list"></div>
+            </div>
+        </section>
+
+        <!-- 板块五：版本状态 -->
         <section id="notices" class="section notices">
             <div class="section-inner">
                 <div class="section-head reveal" id="notices-head">
@@ -101,7 +115,7 @@
             </div>
         </section>
 
-        <!-- 板块五：版权声明 -->
+        <!-- 板块六：版权声明 -->
         <section id="legal" class="section legal">
             <div class="section-inner">
                 <div class="section-head reveal" id="legal-head">
@@ -112,7 +126,7 @@
             </div>
         </section>
 
-        <!-- 板块六：联系渠道 -->
+        <!-- 板块七：联系渠道 -->
         <section id="contact" class="section contact">
             <div class="section-inner">
                 <div class="section-head reveal" id="contact-head">
@@ -130,7 +144,8 @@
     <footer class="footer">
         <div class="footer-inner">
             <span class="footer-brand" id="footer-brand">KSP2D:OE</span>
-            <span class="footer-version" id="footer-version">v0.2.3</span>
+            <span class="footer-version" id="footer-version"></span>
+            <span class="footer-dev" id="footer-dev"></span>
             <span class="footer-copy" id="footer-copy"></span>
             <span class="footer-note" id="footer-note"></span>
         </div>

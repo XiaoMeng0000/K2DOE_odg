@@ -2,6 +2,7 @@
 
 // ==========================================================================
 // 中文站点文案（数据驱动：所有页面文本都从这里读取）
+// 注意：文本内容对齐游戏本体 0.2.4 正式版；版本迭代后需同步更新
 // ==========================================================================
 
 export const CONTENT_ZH = {
@@ -11,7 +12,8 @@ export const CONTENT_ZH = {
             { id: 'hero', label: '任务简报' },
             { id: 'about', label: '游戏简介' },
             { id: 'features', label: '游戏特色' },
-            { id: 'notices', label: '公测需知' },
+            { id: 'updates', label: '版本动态' },
+            { id: 'notices', label: '版本状态' },
             { id: 'legal', label: '版权声明' },
             { id: 'contact', label: '联系渠道' },
         ],
@@ -19,8 +21,10 @@ export const CONTENT_ZH = {
         langSwitchTo: 'EN',
     },
 
-    // —— 板块一：公测倒计时 ——
+    // —— 板块一：Hero ——
+    // 公测时间未到：显示倒计时；时间已过（正式运营中）：显示标题 + 版本行 + CTA
     hero: {
+        // 倒计时文案（仅未发布预告期可见）
         countdownLabel: '距离公测开启还有',
         units: {
             days: '天',
@@ -28,8 +32,13 @@ export const CONTENT_ZH = {
             minutes: '分',
             seconds: '秒',
         },
-        launched: '公测已开启！',
-        launchedSub: '欢迎来到 Kerbin 轨道 —— 准备点火吧，工程师。',
+        // 正式运营状态文案
+        launched: '正式运营中',
+        launchedSub: '轨道工程师 v0.2.4 正式版已发布 — 从 Kerbin 出发，把补给网络铺向整个 Kerbol 星系。',
+        // CTA 按钮（「立即试玩」链接见 site-config.js links.play）
+        cta: {
+            playLabel: '立即试玩',
+        },
     },
 
     // —— 板块二：游戏简介 ——
@@ -37,17 +46,19 @@ export const CONTENT_ZH = {
         title: '游戏简介',
         tag: '// ABOUT',
         body: '坎巴拉太空计划2D:轨道工程师是一款以真实轨道力学为核心的 2D 太空沙盒游戏。'
-            + '指挥你的工程师们，从 Kerbin 出发，建造飞船、规划轨道、执行任务，'
-            + '一步步把后勤网络铺满整个 Kerbol 星系。'
+            + '驾驶你的飞船变轨、交会、远征，在 Kerbol 星系的行星与卫星上部署设施、运输补给，'
+            + '把后勤网络铺满整个星系——从"把飞船送上天"，到"经营一张跨星球的物流网"。'
             + '游戏采用开普勒解析解与 RK4 数值积分双引擎，轨道就像被看不见的尺子精确测量。'
+            + '0.2.3 公测架起了完整可玩的轨道框架，0.2.4 正式版又带来资源经济、货运物流与设施经营。'
             + '变轨失败？没事，读档再来！',
     },
 
-    // —— 板块三：游戏特色（实机画面，左右交替） ——
+    // —— 板块三：游戏特色 ——
+    // 前 3 项带实机截图（左右交替），后 3 项为无图文字卡（不配 image/imageSide 即为文字卡）
     features: {
         title: '游戏特色',
         tag: '// FEATURES',
-        intro: '// 实机画面预览 · SCREENSHOT PREVIEW',
+        intro: '// 玩法矩阵 · FEATURE MATRIX',
         items: [
             {
                 id: 'mechanics',
@@ -58,46 +69,119 @@ export const CONTENT_ZH = {
                 image: 'assets/images/screenshots/01.jpg',
                 title: '轨道力学',
                 subtitle: 'KEPLER + RK4 ENGINE',
-                description: '开普勒轨道滑行、RK4 推力积分、SOI 引力接管，轨道就像被看不见的尺子量过一样精准。变轨失败？没事，读档再来！',
+                description: '开普勒轨道滑行、RK4 推力积分、SOI 引力接管与轨道预测，时间加速跨 SOI 自动保护、拱点机动不再冲过头。轨道，就像被看不见的尺子量过。',
             },
             {
                 id: 'vessel',
                 index: '##FEATURE_02',
                 imageSide: 'right',
                 image: 'assets/images/screenshots/02.jpg',
-                title: '飞船系统',
+                title: '飞船装配',
                 subtitle: 'MODULAR VESSEL SYSTEM',
-                description: '从轨道船坞开始，给你的飞船装上各种模块，看着它的数值一点一点变化。毕竟飞船是你拼的，你说了算——炸了也算!',
+                description: '模块化船体、SAS 姿态控制与氢氧分槽燃料；飞行 HUD 实时读出每槽余量与总 ΔV。燃料耗尽？引擎 engineOut 停机——补给后即可重新点火。',
             },
             {
                 id: 'facility',
                 index: '##FEATURE_03',
                 imageSide: 'left',
                 image: 'assets/images/screenshots/03.jpg',
-                title: '设施系统',
-                subtitle: 'FACILITY NETWORK',
-                description: '轨道船坞、补给站、科研站，停靠、补给、改装、建造飞船、研究实验一气呵成。在 Kerbin 轨道上搭起你的后勤网络，让每一艘回家的飞船都有码头可停！',
+                title: '设施部署与物流',
+                subtitle: 'FACILITY & LOGISTICS',
+                description: '在稳定轨道上部署指令舱、补给站与对接枢纽，每座设施拥有独立存储；货运模块运载货物，材料套装建造飞船，补给链路让每一艘回家的飞船都有码头可停。',
+            },
+            {
+                id: 'economy',
+                index: '##FEATURE_04',
+                title: '资源经济',
+                subtitle: 'RESOURCE ECONOMY',
+                description: '燃料按引擎配方分槽（液氢:液氧 = 1:8），总质量随推进剂实时变化；科技点、材料套装与设施存储构成完整经济——从发射到补给，每一克都要精打细算。',
+            },
+            {
+                id: 'modes',
+                index: '##FEATURE_05',
+                title: '自由与生涯',
+                subtitle: 'SANDBOX & CAREER',
+                description: '自由模式：蓝图全解锁、余额不设限，纯粹的沙盒。生涯模式：科技点解锁蓝图、天体资源必须主动扫描——带上资源扫描仪，先探明，再开采。',
+            },
+            {
+                id: 'interface',
+                index: '##FEATURE_06',
+                title: '界面与视听',
+                subtitle: 'DOM UI & AUDIO',
+                description: '全 DOM 的 KSP2 风格面板体系：可拖动面板、实时 HUD 与终端式菜单；按天体类型区分的飞行 BGM、SOI 切换音效与屏幕空间天空盒。',
             },
         ],
     },
 
-    // —— 板块四：公测需知 ——
-    notices: {
-        title: '公测需知',
-        tag: '// OPEN BETA NOTICE',
-        // 板块说明（不需要可置空）
-        note: '',
-        // 公测须知内容
-        items: [
-            '轨道线渲染仍存在参考系问题，我们暂时无法彻底解决',
-            'Kerbol 星系尚未搭建完成，当前仅开放 Kerbol 与 Kerbin 两颗天体',
-            '飞船与设施系统仍未完善，模块种类、建造流程与设施功能都在持续迭代中',
-            '还存在未知bug',
-            '请大家放低期待，从实反馈，你们的每一条反馈，都会成为下一版的方向。感谢大家的耐心和支持。',
+    // —— 板块四：版本动态（时间线；内容随游戏公告迭代，摘要级维护） ——
+    updates: {
+        title: '版本动态',
+        tag: '// UPDATES',
+        note: '沿着版本时间线，看轨道工程师如何一步步走到今天。',
+        // entries 自上而下渲染；version 徽章 + date（可空）+ title + 要点列表
+        entries: [
+            {
+                // 常驻条目：当前制作节奏说明（无版本号徽章置顶）
+                version: '近期动态',
+                title: '制作节奏调整',
+                items: [
+                    '0.2.4 正式版发布后，逃逸速度的内容产出将转为小更新节奏：聚焦问题修复、体验打磨与小幅功能增强，不再追求每次都是大版本。',
+                    '每次小更新都会体现在游戏公告栏与版本号中。开发没有停止，你的反馈依然是最重要的输入。',
+                ],
+            },
+            {
+                version: 'v0.2.4',
+                title: '轨道工程师 0.2.4 正式版',
+                date: '2026-09',
+                items: [
+                    '飞行状态 HUD：燃料卡与总 ΔV 实时读数，引擎 engineOut 时整卡切红',
+                    '可拖动多面板体系，工具栏面板多实例并存',
+                    '时间加速面板重制 + 拱点加速提前停表保护',
+                    '设施部署扣费规则修正：自由模式回归纯沙盒',
+                ],
+            },
+            {
+                version: 'v0.2.4beta',
+                title: '0.2.4 beta：玩法层大更新',
+                date: '2026-08',
+                items: [
+                    '资源系统：氢/氧分槽 + 引擎配方消耗 + engineOut 停机恢复',
+                    '货运与设施：轨道部署、独立存储、补给链路、材料套装',
+                    '自由 / 生涯双模式与天体主动扫描',
+                    '全 DOM 的 KSP2 面板体系与 UI 重构',
+                    '星系配置：多星系组合选择与家园绑定（测试功能）',
+                ],
+            },
+            {
+                version: 'v0.2.3',
+                title: '首次公开测试',
+                date: '2026-08',
+                items: [
+                    '第一个完整可玩框架：轨道力学、建造、SAS 与时间加速',
+                    'Kerbolar 系 16 颗天体全部实装：从 Kerbol 到 Eeloo',
+                    '追踪站全局监控、星系图鉴、音频系统',
+                ],
+            },
         ],
     },
 
-    // —— 板块五：版权声明 ——
+    // —— 板块五：版本状态（当前版本的务实说明，替代旧"公测需知"） ——
+    notices: {
+        title: '版本状态',
+        tag: '// VERSION STATUS',
+        // 板块说明（不需要可置空）
+        note: '',
+        // 状态条目
+        items: [
+            '最新正式版 v0.2.4；开发中版本 v0.2.5-alpha。版本详情见上方「版本动态」。',
+            '已知问题：游戏为 2D 无倾角模型，Jool 与 Eeloo 轨道几何相交。经 19 年时长推演验证，当前初始相位下最小中心距约为 SOI 半径和的 3 倍，实际不重叠；后续若调整轨道相位需重新评估。',
+            '星系配置为测试功能：占位星系（Debdeb / Tuun）仅展示数据、暂不可选择；Testbolar 系沿用早期原型缩放尺度，设施对接范围视觉偏大，属预期现象。',
+            '在线试玩（浏览器版）与本地版的存档相互独立，进度不互通。',
+            '遇到问题欢迎通过下方联系渠道反馈，每一条反馈都会成为下一版的方向。',
+        ],
+    },
+
+    // —— 板块六：版权声明 ——
     legal: {
         title: '版权声明',
         tag: '// LEGAL NOTICE',
@@ -136,11 +220,14 @@ export const CONTENT_ZH = {
         ],
     },
 
-    // —— 板块六：联系渠道 ——
+    // —— 板块七：联系渠道 ——
     contact: {
         title: '联系渠道',
         tag: '// CONTACT',
         note: '遇到 Bug、有建议，或想提前聊聊你的飞船设计？随时联系我们。',
+        // 一键复制按钮文案
+        copyLabel: '复制',
+        copiedLabel: '已复制',
         channels: [
             {
                 id: 'qq',
@@ -148,7 +235,7 @@ export const CONTENT_ZH = {
                 label: 'QQ',
                 hint: '// DIRECT MESSAGE',
                 value: '1570447677',
-                url: 'tencent://message/?uin=1570447677',
+                url: 'https://wpa.qq.com/msgrd?v=3&uin=1570447677&site=qq&menu=yes',
             },
             {
                 id: 'email',

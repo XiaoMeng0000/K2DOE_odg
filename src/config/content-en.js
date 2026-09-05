@@ -2,6 +2,7 @@
 
 // ==========================================================================
 // 英文站点文案（与 content-zh.js 结构完全对应，双语切换时按同一 schema 读取）
+// 注意：内容对齐游戏本体 0.2.4 正式版；版本迭代后需同步更新
 // ==========================================================================
 
 export const CONTENT_EN = {
@@ -11,15 +12,18 @@ export const CONTENT_EN = {
             { id: 'hero', label: 'MISSION BRIEF' },
             { id: 'about', label: 'ABOUT' },
             { id: 'features', label: 'FEATURES' },
-            { id: 'notices', label: 'NOTICES' },
+            { id: 'updates', label: 'UPDATES' },
+            { id: 'notices', label: 'STATUS' },
             { id: 'legal', label: 'COPYRIGHT' },
             { id: 'contact', label: 'CONTACT' },
         ],
         langSwitchTo: '中文',
     },
 
-    // —— Section 1: Countdown ——
+    // —— Section 1: Hero ——
+    // Before launch: countdown; after launch (now): status title + version line + CTA
     hero: {
+        // Countdown copy (only visible during the pre-release phase)
         countdownLabel: 'COUNTDOWN TO OPEN BETA',
         units: {
             days: 'DAYS',
@@ -27,8 +31,13 @@ export const CONTENT_EN = {
             minutes: 'MINS',
             seconds: 'SECS',
         },
-        launched: 'OPEN BETA IS LIVE!',
-        launchedSub: 'Welcome to Kerbin orbit — fire it up, engineer.',
+        // Live-status copy
+        launched: 'NOW LIVE',
+        launchedSub: 'Orbit Engineer v0.2.4 is out — launch from Kerbin and push your supply network across the Kerbol system.',
+        // CTA button（"PLAY NOW" links to site-config.js links.play）
+        cta: {
+            playLabel: 'PLAY NOW',
+        },
     },
 
     // —— Section 2: About ——
@@ -36,17 +45,20 @@ export const CONTENT_EN = {
         title: 'About the Game',
         tag: '// ABOUT',
         body: 'Kerbal Space Program 2D: Orbit Engineer is a 2D space sandbox built around real orbital mechanics. '
-            + 'Lead your engineers from Kerbin outward — build vessels, plan orbits, run missions, '
-            + 'and grow your logistics network across the Kerbol system. '
+            + 'Maneuver, rendezvous, and fly long-range missions — deploy facilities, haul supplies, '
+            + 'and grow your logistics network across the planets and moons of the Kerbol system: from "getting a ship up" '
+            + 'to running an interplanetary supply chain. '
             + 'Driven by Kepler analytic solutions and RK4 numerical integration, orbits are measured with invisible precision. '
+            + 'Open beta 0.2.3 delivered the playable orbital framework; 0.2.4 adds the resource economy, cargo logistics, and facility management. '
             + 'Miss your burn? No worries — reload and try again!',
     },
 
-    // —— Section 3: Features (screenshots, alternating layout) ——
+    // —— Section 3: Features ——
+    // First 3 items carry screenshots (alternating layout); omit image/imageSide for text-only cards
     features: {
         title: 'Game Features',
         tag: '// FEATURES',
-        intro: '// SCREENSHOT PREVIEW',
+        intro: '// FEATURE MATRIX',
         items: [
             {
                 id: 'mechanics',
@@ -55,46 +67,117 @@ export const CONTENT_EN = {
                 image: 'assets/images/screenshots/01.jpg',
                 title: 'Orbital Mechanics',
                 subtitle: 'KEPLER + RK4 ENGINE',
-                description: 'Keplerian coasting, RK4 thrust integration, SOI gravity takeover — orbits measured with invisible precision. Miss a burn? Reload and try again!',
+                description: 'Keplerian coasting, RK4 thrust integration, SOI gravity takeover, and orbit prediction — with auto-protection when time-warp crosses SOI boundaries, so you never blow past a maneuver node. Orbits measured with invisible precision.',
             },
             {
                 id: 'vessel',
                 index: '##FEATURE_02',
                 imageSide: 'right',
                 image: 'assets/images/screenshots/02.jpg',
-                title: 'Vessel System',
+                title: 'Vessel Assembly',
                 subtitle: 'MODULAR VESSEL SYSTEM',
-                description: 'Start at the orbital dock, bolt modules onto your vessel, and watch the numbers tick up. It is your vessel, your rules — even if it blows up!',
+                description: 'Modular hulls, SAS attitude control, and split hydrogen/oxygen tanks — the in-flight HUD streams every tank level and total ΔV in real time. Run dry? Engines drop to engineOut — refuel and relight.',
             },
             {
                 id: 'facility',
                 index: '##FEATURE_03',
                 imageSide: 'left',
                 image: 'assets/images/screenshots/03.jpg',
-                title: 'Facility System',
-                subtitle: 'FACILITY NETWORK',
-                description: 'Orbital docks, fuel depots, science labs — docking, refueling, refitting, building, researching, all in one flow. Build your logistics network around Kerbin, so every vessel coming home has a pad to dock at!',
+                title: 'Facilities & Logistics',
+                subtitle: 'FACILITY & LOGISTICS',
+                description: 'Deploy command posts, supply depots, and docking hubs on stable orbits — each with its own storage. Haul cargo in freight modules, spend Material Kits on construction, and keep the supply chain open so every ship coming home has a pad to dock at.',
+            },
+            {
+                id: 'economy',
+                index: '##FEATURE_04',
+                title: 'Resource Economy',
+                subtitle: 'RESOURCE ECONOMY',
+                description: 'Fuel is split by engine recipe (LH2:LOX = 1:8) and total mass shifts with propellant on board. Science points, Material Kits, and facility storage form a full economy — every gram counts, from launch to resupply.',
+            },
+            {
+                id: 'modes',
+                index: '##FEATURE_05',
+                title: 'Sandbox & Career',
+                subtitle: 'SANDBOX & CAREER',
+                description: 'Sandbox: everything unlocked, budgets unlimited — pure sandbox. Career: unlock blueprints with science, and probe celestial bodies with resource scanners before you mine. Survey first, extract second.',
+            },
+            {
+                id: 'interface',
+                index: '##FEATURE_06',
+                title: 'UI & Audio',
+                subtitle: 'DOM UI & AUDIO',
+                description: 'An all-DOM, KSP2-style panel system: draggable panels, a live HUD, and terminal-style menus. Body-type based flight music, SOI-switch sound cues, and a screen-space skybox.',
             },
         ],
     },
 
-    // —— Section 4: Open Beta Notices ——
-    notices: {
-        title: 'Open Beta Notices',
-        tag: '// OPEN BETA NOTICE',
-        // Section note (leave empty if not needed)
-        note: '',
-        // Notice items
-        items: [
-            'Orbit line rendering still has frame-of-reference issues that we cannot fully resolve for now',
-            'The Kerbol system is still under construction — currently only Kerbol and Kerbin are available',
-            'The vessel and facility systems are still incomplete; module types, build flow, and facility features are under continuous iteration',
-            'There may still be unknown bugs',
-            'Please keep your expectations in check and give us honest feedback. Every piece of feedback points the way for the next version. Thank you for your patience and support.',
+    // —— Section 4: Version Updates (timeline; maintain at summary level) ——
+    updates: {
+        title: 'Version Updates',
+        tag: '// UPDATES',
+        note: 'Follow the version timeline — how Orbit Engineer got to where it is today.',
+        entries: [
+            {
+                // Persistent entry: current development cadence (no date)
+                version: 'RECENT',
+                title: 'Development Cadence',
+                items: [
+                    'After the 0.2.4 release, [Escape Velocity] is shifting to a cadence of smaller updates: bug fixes, polish, and minor features — not every update will be a major version.',
+                    'Every update will still be reflected in the in-game bulletin and the version number. Development continues, and your feedback remains the most important input.',
+                ],
+            },
+            {
+                version: 'v0.2.4',
+                title: 'Orbit Engineer 0.2.4',
+                date: '2026-09',
+                items: [
+                    'In-flight HUD: fuel and total ΔV readouts in real time — the whole card turns red on engineOut',
+                    'Draggable multi-panel system; toolbar panels can coexist as separate floating layers',
+                    'Time-warp panel rebuilt + early-stop margin near apsides',
+                    'Facility deployment cost rules fixed: sandbox mode is pure sandbox again',
+                ],
+            },
+            {
+                version: 'v0.2.4beta',
+                title: '0.2.4 beta: The Gameplay Overhaul',
+                date: '2026-08',
+                items: [
+                    'Resources: split LH2/LOX tanks + engine-recipe consumption + engineOut recovery',
+                    'Cargo & facilities: orbital deployment, per-facility storage, supply chains, Material Kits',
+                    'Sandbox / Career modes and active celestial scanning',
+                    'All-DOM KSP2 panel system with full UI refactor',
+                    'Galaxy configuration: multi-system selection and homeworld binding (experimental)',
+                ],
+            },
+            {
+                version: 'v0.2.3',
+                title: 'First Public Test',
+                date: '2026-08',
+                items: [
+                    'First fully playable framework: orbital mechanics, construction, SAS, time warp',
+                    'All 16 Kerbolar bodies implemented: from Kerbol to Eeloo',
+                    'Tracking station, system gallery, and audio system',
+                ],
+            },
         ],
     },
 
-    // —— Section 5: Copyright Notice ——
+    // —— Section 5: Version Status (practical notes on the current version) ——
+    notices: {
+        title: 'Version Status',
+        tag: '// VERSION STATUS',
+        // Section note (leave empty if not needed)
+        note: '',
+        items: [
+            'Latest release: v0.2.4. In development: v0.2.5-alpha. Details in "Version Updates" above.',
+            'Known issue: with no orbital inclination in this 2D model, Jool and Eeloo orbits intersect geometrically. A 19-year simulation confirms the current initial phase keeps the minimum center distance at roughly 3× the sum of SOI radii — safe today, but any future phase change needs re-evaluation.',
+            'Galaxy configuration is experimental: placeholder systems (Debdeb / Tuun) display data but cannot be selected; Testbolar uses the early prototype scale, so facility docking ranges look oversized by design.',
+            'Browser saves and local saves are independent — progress does not carry over between them.',
+            'Hit a problem? Reach us through the contact channels below — every report points the way for the next version.',
+        ],
+    },
+
+    // —— Section 6: Copyright Notice ——
     legal: {
         title: 'Copyright Notice',
         tag: '// LEGAL NOTICE',
@@ -133,11 +216,14 @@ export const CONTENT_EN = {
         ],
     },
 
-    // —— Section 6: Contact ——
+    // —— Section 7: Contact ——
     contact: {
         title: 'Contact Us',
         tag: '// CONTACT',
         note: 'Found a bug, have an idea, or just want to talk about your next vessel design? Reach out any time.',
+        // Copy button labels
+        copyLabel: 'COPY',
+        copiedLabel: 'COPIED',
         channels: [
             {
                 id: 'qq',
@@ -145,7 +231,7 @@ export const CONTENT_EN = {
                 label: 'QQ',
                 hint: '// DIRECT MESSAGE',
                 value: '1570447677',
-                url: 'tencent://message/?uin=1570447677',
+                url: 'https://wpa.qq.com/msgrd?v=3&uin=1570447677&site=qq&menu=yes',
             },
             {
                 id: 'email',
