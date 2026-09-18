@@ -33,31 +33,9 @@
 
     <main>
 
-        <!-- 板块一：公测倒计时 Hero（极简：仅倒计时 + 标签） -->
+        <!-- 板块一：Hero —— 正式运营状态卡（倒计时结构仅当公测时间未到时由 countdown.js 动态生成） -->
         <section id="hero" class="section hero">
             <div class="countdown-panel" id="countdown-panel">
-                <p class="countdown-label" id="countdown-label">距离公测开启还有</p>
-                <div class="countdown-grid">
-                    <div class="countdown-unit">
-                        <span class="countdown-value" id="cd-days">00</span>
-                        <span class="countdown-unit-label" id="cd-days-label">天</span>
-                    </div>
-                    <span class="countdown-sep">:</span>
-                    <div class="countdown-unit">
-                        <span class="countdown-value" id="cd-hours">00</span>
-                        <span class="countdown-unit-label" id="cd-hours-label">时</span>
-                    </div>
-                    <span class="countdown-sep">:</span>
-                    <div class="countdown-unit">
-                        <span class="countdown-value" id="cd-minutes">00</span>
-                        <span class="countdown-unit-label" id="cd-minutes-label">分</span>
-                    </div>
-                    <span class="countdown-sep">:</span>
-                    <div class="countdown-unit">
-                        <span class="countdown-value" id="cd-seconds">00</span>
-                        <span class="countdown-unit-label" id="cd-seconds-label">秒</span>
-                    </div>
-                </div>
                 <!-- 已过公测时间后进入正式运营状态（倒计时冻结，显示标题+版本行+CTA 入口） -->
                 <div class="launched-msg" id="launched-msg" hidden>
                     <p class="launched-title"></p>
@@ -107,8 +85,8 @@
         <section id="notices" class="section notices">
             <div class="section-inner">
                 <div class="section-head reveal" id="notices-head">
-                    <h2 class="section-title"><span class="hash">##</span><span class="t">公测需知</span></h2>
-                    <span class="section-tag">// OPEN BETA NOTICE</span>
+                    <h2 class="section-title"><span class="hash">##</span><span class="t">版本状态</span></h2>
+                    <span class="section-tag">// VERSION STATUS</span>
                 </div>
                 <p class="section-intro reveal" id="notices-intro"></p>
                 <ul class="notices-list reveal" id="notices-list"></ul>

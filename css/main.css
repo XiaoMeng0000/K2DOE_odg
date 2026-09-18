@@ -299,7 +299,7 @@ main,
     transform: translateY(2px);
 }
 
-/* 公测已开启状态：数字转绿 */
+/* 公测已开启状态：数字转绿（页面恰好跨过发布时刻时的兜底一帧） */
 .countdown-panel.is-launched .countdown-value {
     color: var(--green-ok);
     text-shadow: var(--glow-green);
@@ -309,23 +309,52 @@ main,
     color: var(--text-weak);
 }
 
+/* —— 正式运营状态卡（发布后由 countdown.js 解除 hidden 显示） —— */
 .launched-msg {
-    margin-top: 24px;
-    border-top: 1px dashed var(--green-ok);
-    padding-top: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 状态卡入场：与全站 .reveal 同节奏，标题 → 版本行 → 副文 → 按钮依次浮现 */
+@keyframes hero-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .launched-title {
     color: var(--green-ok);
-    font-size: 1.5rem;
+    font-size: clamp(2.4rem, 8vw, 4.2rem);
+    font-weight: 400;
     letter-spacing: 0.1em;
     text-shadow: var(--glow-green);
+    animation: hero-in 0.7s ease both;
+}
+
+/* 版本行：青色小字，位于标题与副文之间 */
+.launched-version {
+    margin-top: 14px;
+    color: var(--line-hud);
+    font-size: 0.95rem;
+    letter-spacing: 0.22em;
+    text-shadow: var(--glow-cyan);
+    animation: hero-in 0.7s ease 0.12s both;
 }
 
 .launched-sub {
+    margin-top: 12px;
     color: var(--text-dim);
-    font-size: 0.95rem;
-    margin-top: 6px;
+    font-size: 1rem;
+    line-height: 1.9;
+    max-width: 720px;
+    animation: hero-in 0.7s ease 0.22s both;
 }
 
 /* —— 板块三：游戏特色（左右交替） —— */
@@ -756,41 +785,10 @@ main,
    —— 正式运营状态卡 / CTA 按钮 / 版本动态时间线 / 无图特色卡 / 页脚 dev 小标
    ========================================================================== */
 
-/* —— 正式运营状态（倒计时冻结后）：隐藏计时区，仅显示状态卡 —— */
+/* —— 正式运营态兜底：若页面恰好跨过发布时刻，倒计时结构就地隐藏 —— */
 .countdown-panel.is-launched .countdown-label,
 .countdown-panel.is-launched .countdown-grid {
     display: none;
-}
-
-/* 状态卡去掉原有"顶部虚线分隔"样式，直接作为 Hero 主体 */
-.countdown-panel.is-launched .launched-msg {
-    margin-top: 0;
-    border-top: none;
-    padding-top: 0;
-}
-
-/* 标题提升为页面主标题 */
-.launched-title {
-    font-size: clamp(2.4rem, 8vw, 4.2rem);
-    font-weight: 400;
-    letter-spacing: 0.1em;
-}
-
-/* 版本行：青色小字，位于标题与副文之间 */
-.launched-version {
-    margin-top: 14px;
-    color: var(--line-hud);
-    font-size: 0.95rem;
-    letter-spacing: 0.22em;
-    text-shadow: var(--glow-cyan);
-}
-
-.launched-sub {
-    margin-top: 12px;
-    font-size: 1rem;
-    line-height: 1.9;
-    color: var(--text-dim);
-    max-width: 720px;
 }
 
 /* —— CTA 按钮组（Hero 正式运营态） —— */
@@ -800,6 +798,7 @@ main,
     justify-content: center;
     gap: 16px;
     margin-top: 36px;
+    animation: hero-in 0.7s ease 0.34s both;
 }
 
 .cta-btn {
