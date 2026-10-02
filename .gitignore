@@ -1,0 +1,11 @@
+# GraphFlow 索引产物（本地工具生成，不纳入版本库）
+.graphflow/
+.graphflow-cache/
+graphflow-out/
+
+# 临时验证脚本
+.verify_*.mjs
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db

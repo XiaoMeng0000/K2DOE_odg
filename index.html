@@ -4,23 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="坎巴拉太空计划2D:轨道工程师 —— 2D 轨道力学太空沙盒游戏官网 | Kerbal Space Program 2D: Orbit Engineer official site">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#05070b">
     <title>KSP2D:OE | 坎巴拉太空计划2D:轨道工程师</title>
-    <!-- 字体：Share Tech Mono（KSP2 HUD 风格等宽字体） -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
+<body data-page="home">
 
     <!-- 星空背景（Canvas 渲染层，由 src/modules/starfield.js 驱动） -->
     <canvas id="starfield" aria-hidden="true"></canvas>
 
-    <!-- 顶部 HUD 导航栏 -->
+    <!-- 顶部导航栏（链接由 navigation.js 按语言渲染） -->
     <header class="topbar">
         <div class="topbar-inner">
-            <a class="brand" href="#hero">
+            <a class="brand" href="index.html">
                 <img id="brand-logo" src="assets/images/logo.png" alt="KSP2D:OE logo">
                 <span class="brand-name">KSP2D:OE</span>
             </a>
@@ -33,86 +29,94 @@
 
     <main>
 
-        <!-- 板块一：Hero —— 正式运营状态卡（倒计时结构仅当公测时间未到时由 countdown.js 动态生成） -->
+        <!-- Hero —— 正式运营状态卡（倒计时结构仅当公测时间未到时由 countdown.js 动态生成） -->
         <section id="hero" class="section hero">
             <div class="countdown-panel" id="countdown-panel">
-                <!-- 已过公测时间后进入正式运营状态（倒计时冻结，显示标题+版本行+CTA 入口） -->
                 <div class="launched-msg" id="launched-msg" hidden>
                     <p class="launched-title"></p>
                     <p class="launched-version" id="launched-version"></p>
                     <p class="launched-sub"></p>
                     <div class="launched-cta" id="launched-cta"></div>
+                    <p class="launched-specs" id="launched-specs"></p>
                 </div>
             </div>
         </section>
 
-        <!-- 板块二：游戏简介 -->
+        <!-- 游戏简介 -->
         <section id="about" class="section about">
             <div class="section-inner reveal">
                 <div class="section-head" id="about-head">
-                    <h2 class="section-title"><span class="hash">##</span><span class="t">游戏简介</span></h2>
-                    <span class="section-tag">// ABOUT</span>
+                    <h2 class="section-title"><span class="t">游戏简介</span></h2>
+                    <span class="section-tag">ABOUT</span>
                 </div>
                 <p class="section-body" id="about-body"></p>
             </div>
         </section>
 
-        <!-- 板块三：游戏特色（实机画面，左右交替） -->
+        <!-- 玩法特色（前 3 项带实机截图，其余为文字卡） -->
         <section id="features" class="section features">
             <div class="section-inner">
                 <div class="section-head reveal" id="features-head">
-                    <h2 class="section-title"><span class="hash">##</span><span class="t">游戏特色</span></h2>
-                    <span class="section-tag">// FEATURES</span>
+                    <h2 class="section-title"><span class="t">玩法特色</span></h2>
+                    <span class="section-tag">FEATURES</span>
                 </div>
                 <p class="section-intro reveal" id="features-intro"></p>
                 <div class="features-list" id="features-list"></div>
             </div>
         </section>
 
-        <!-- 板块四：版本动态 -->
+        <!-- 版本动态（仅显示最新若干条，完整时间线在 news.html） -->
         <section id="updates" class="section updates">
             <div class="section-inner">
                 <div class="section-head reveal" id="updates-head">
-                    <h2 class="section-title"><span class="hash">##</span><span class="t">版本动态</span></h2>
-                    <span class="section-tag">// UPDATES</span>
+                    <h2 class="section-title"><span class="t">版本动态</span></h2>
+                    <span class="section-tag">UPDATES</span>
                 </div>
                 <p class="section-intro reveal" id="updates-intro"></p>
                 <div class="updates-list" id="updates-list"></div>
-            </div>
-        </section>
-
-        <!-- 板块五：版本状态 -->
-        <section id="notices" class="section notices">
-            <div class="section-inner">
-                <div class="section-head reveal" id="notices-head">
-                    <h2 class="section-title"><span class="hash">##</span><span class="t">版本状态</span></h2>
-                    <span class="section-tag">// VERSION STATUS</span>
+                <div class="updates-more reveal">
+                    <a class="more-link" id="updates-more" href="news.html"></a>
                 </div>
-                <p class="section-intro reveal" id="notices-intro"></p>
-                <ul class="notices-list reveal" id="notices-list"></ul>
             </div>
         </section>
 
-        <!-- 板块六：版权声明 -->
-        <section id="legal" class="section legal">
+        <!-- 上手指南（切片：完整版见 guide.html） -->
+        <section id="guide" class="section guide">
             <div class="section-inner">
-                <div class="section-head reveal" id="legal-head">
-                    <h2 class="section-title"><span class="hash">##</span><span class="t">版权声明</span></h2>
-                    <span class="section-tag">// LEGAL NOTICE</span>
+                <div class="section-head reveal" id="guide-head">
+                    <h2 class="section-title"><span class="t">上手指南</span></h2>
+                    <span class="section-tag">GETTING STARTED</span>
                 </div>
-                <div class="legal-blocks" id="legal-blocks"></div>
+                <p class="section-intro reveal" id="guide-intro"></p>
+                <div class="guide-teaser" id="guide-teaser"></div>
+                <div class="updates-more reveal">
+                    <a class="more-link" id="guide-more" href="guide.html"></a>
+                </div>
             </div>
         </section>
 
-        <!-- 板块七：联系渠道 -->
+        <!-- 联系我们 -->
         <section id="contact" class="section contact">
             <div class="section-inner">
                 <div class="section-head reveal" id="contact-head">
-                    <h2 class="section-title"><span class="hash">##</span><span class="t">联系渠道</span></h2>
-                    <span class="section-tag">// CONTACT</span>
+                    <h2 class="section-title"><span class="t">联系我们</span></h2>
+                    <span class="section-tag">CONTACT</span>
                 </div>
                 <p class="section-intro reveal" id="contact-note"></p>
                 <div class="contact-grid" id="contact-grid"></div>
+            </div>
+        </section>
+
+        <!-- 版权声明（默认折叠，点击展开全文） -->
+        <section id="legal" class="section legal">
+            <div class="section-inner">
+                <details class="legal-fold reveal">
+                    <summary class="legal-summary">
+                        <span class="legal-summary-label" id="legal-fold-label"></span>
+                        <span class="legal-summary-hint" id="legal-fold-hint"></span>
+                    </summary>
+                    <div class="legal-blocks" id="legal-blocks"></div>
+                </details>
             </div>
         </section>
 

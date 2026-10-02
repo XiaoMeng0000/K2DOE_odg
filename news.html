@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KSP2D:OE 版本动态 —— 与游戏内公告栏同步的完整版本时间线 | Version updates for Kerbal Space Program 2D: Orbit Engineer">
+    <meta name="theme-color" content="#000000">
+    <title>版本动态 | KSP2D:OE</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="news">
+
+    <canvas id="starfield" aria-hidden="true"></canvas>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html">
+                <img id="brand-logo" src="assets/images/logo.png" alt="KSP2D:OE logo">
+                <span class="brand-name">KSP2D:OE</span>
+            </a>
+            <nav class="main-nav" aria-label="主导航">
+                <ul id="nav-links"></ul>
+                <button id="lang-switch" class="lang-switch" type="button" aria-label="切换语言">EN</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- 页面头 -->
+        <section class="section page-head">
+            <div class="section-inner">
+                <div class="page-head-row reveal">
+                    <h1 class="page-title" id="page-title"></h1>
+                    <span class="page-tag" id="page-tag"></span>
+                </div>
+                <p class="page-intro reveal" id="page-intro"></p>
+                <a class="page-back reveal" id="page-back" href="index.html"></a>
+            </div>
+        </section>
+
+        <!-- 完整版本时间线 -->
+        <section id="updates" class="section updates">
+            <div class="section-inner">
+                <div class="section-head reveal" id="updates-head">
+                    <h2 class="section-title"><span class="t">版本动态</span></h2>
+                    <span class="section-tag">UPDATES</span>
+                </div>
+                <p class="section-intro reveal" id="updates-intro"></p>
+                <div class="updates-list" id="updates-list"></div>
+            </div>
+        </section>
+
+        <!-- 版本状态（当前版本的务实说明） -->
+        <section id="notices" class="section notices">
+            <div class="section-inner">
+                <div class="section-head reveal" id="notices-head">
+                    <h2 class="section-title"><span class="t">版本状态</span></h2>
+                    <span class="section-tag">VERSION STATUS</span>
+                </div>
+                <p class="section-intro reveal" id="notices-intro"></p>
+                <ul class="notices-list reveal" id="notices-list"></ul>
+            </div>
+        </section>
+
+        <!-- 页尾动作 -->
+        <section class="section page-foot">
+            <div class="section-inner">
+                <div class="page-actions reveal">
+                    <a class="cta-btn cta-primary" id="page-play" href="#"></a>
+                    <a class="page-back" id="page-back-bottom" href="index.html"></a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span class="footer-brand" id="footer-brand">KSP2D:OE</span>
+            <span class="footer-version" id="footer-version"></span>
+            <span class="footer-dev" id="footer-dev"></span>
+            <span class="footer-copy" id="footer-copy"></span>
+            <span class="footer-note" id="footer-note"></span>
+        </div>
+    </footer>
+
+    <noscript>
+        <p class="noscript-warn">本页面需要启用 JavaScript 才能完整展示内容。</p>
+    </noscript>
+
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>

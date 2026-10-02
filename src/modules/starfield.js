@@ -35,14 +35,14 @@ export function initStarfield(canvas) {
         };
     }
 
-    // 生成一个恒星光晕（青/橙两色，呼应主色调）
+    // 生成一个恒星光晕（紫 / 蓝灰两色，呼应 KSP2 面板主色）
     function makeGlow() {
         return {
             x: Math.random() * width,
             y: Math.random() * height,
             r: 60 + Math.random() * 90,
-            color: Math.random() > 0.5 ? '0, 212, 255' : '255, 170, 0',
-            alpha: 0.05 + Math.random() * 0.06,
+            color: Math.random() > 0.5 ? '90, 95, 207' : '110, 140, 200',
+            alpha: 0.04 + Math.random() * 0.05,
         };
     }
 

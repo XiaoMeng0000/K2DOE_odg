@@ -21,8 +21,8 @@ export const SITE_CONFIG = {
     // —— 版本信息（页脚 / Hero 状态行共用，单一事实源） ——
     // version   ：最新正式版（对外展示的当前版本）
     // devVersion：开发中版本（页脚与状态行以 "dev xxx" 小标展示；无开发版时置空）
-    version: 'v0.2.4',
-    devVersion: 'v0.2.5-alpha',
+    version: 'v0.2.6',
+    devVersion: 'v0.3.0-alpha',
 
     // —— 站点链接 ——
     links: {

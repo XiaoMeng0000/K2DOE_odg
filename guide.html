@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KSP2D:OE 上手指南 —— 三步开始第一次变轨，含常用键位与常见问题 | Getting started with Kerbal Space Program 2D: Orbit Engineer">
+    <meta name="theme-color" content="#000000">
+    <title>上手指南 | KSP2D:OE</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-page="guide">
+
+    <canvas id="starfield" aria-hidden="true"></canvas>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html">
+                <img id="brand-logo" src="assets/images/logo.png" alt="KSP2D:OE logo">
+                <span class="brand-name">KSP2D:OE</span>
+            </a>
+            <nav class="main-nav" aria-label="主导航">
+                <ul id="nav-links"></ul>
+                <button id="lang-switch" class="lang-switch" type="button" aria-label="切换语言">EN</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- 页面头 -->
+        <section class="section page-head">
+            <div class="section-inner">
+                <div class="page-head-row reveal">
+                    <h1 class="page-title" id="page-title"></h1>
+                    <span class="page-tag" id="page-tag"></span>
+                </div>
+                <p class="page-intro reveal" id="page-intro"></p>
+                <a class="page-back reveal" id="page-back" href="index.html"></a>
+            </div>
+        </section>
+
+        <!-- 开始游戏（步骤） -->
+        <section id="steps" class="section guide-steps">
+            <div class="section-inner">
+                <div class="section-head reveal" id="steps-head">
+                    <h2 class="section-title"><span class="t">开始游戏</span></h2>
+                    <span class="section-tag">STEPS</span>
+                </div>
+                <div class="steps-list" id="steps-list"></div>
+            </div>
+        </section>
+
+        <!-- 常用键位 -->
+        <section id="keys" class="section guide-keys">
+            <div class="section-inner">
+                <div class="section-head reveal" id="keys-head">
+                    <h2 class="section-title"><span class="t">常用键位</span></h2>
+                    <span class="section-tag">KEY BINDINGS</span>
+                </div>
+                <p class="section-intro reveal" id="keys-note"></p>
+                <div class="key-table reveal" id="key-table"></div>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section id="faq" class="section guide-faq">
+            <div class="section-inner">
+                <div class="section-head reveal" id="faq-head">
+                    <h2 class="section-title"><span class="t">常见问题</span></h2>
+                    <span class="section-tag">FAQ</span>
+                </div>
+                <div class="faq-list" id="faq-list"></div>
+            </div>
+        </section>
+
+        <!-- 页尾动作 -->
+        <section class="section page-foot">
+            <div class="section-inner">
+                <div class="page-actions reveal">
+                    <a class="cta-btn cta-primary" id="page-play" href="#"></a>
+                    <a class="page-back" id="page-back-bottom" href="index.html"></a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span class="footer-brand" id="footer-brand">KSP2D:OE</span>
+            <span class="footer-version" id="footer-version"></span>
+            <span class="footer-dev" id="footer-dev"></span>
+            <span class="footer-copy" id="footer-copy"></span>
+            <span class="footer-note" id="footer-note"></span>
+        </div>
+    </footer>
+
+    <noscript>
+        <p class="noscript-warn">本页面需要启用 JavaScript 才能完整展示内容。</p>
+    </noscript>
+
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>

@@ -2,10 +2,10 @@
 
 // ==========================================================================
 // 国际化模块（i18n）
-// 根据当前语言读取对应文案数据；切换语言时更新状态并通过 EventBus 广播
+// 根据当前语言读取对应文案数据；切换语言时更新状态、持久化偏好并通过 EventBus 广播
 // ==========================================================================
 
-import { State } from './state.js';
+import { State, LANG_STORAGE_KEY } from './state.js';
 import { EventBus } from './event-bus.js';
 import { CONTENT_ZH } from '../config/content-zh.js';
 import { CONTENT_EN } from '../config/content-en.js';
@@ -37,6 +37,14 @@ export const I18n = {
             return;
         }
         State.data.language = lang;
+
+        // 持久化语言偏好，使跳转页面后保持一致（存储不可用时忽略）
+        try {
+            window.localStorage.setItem(LANG_STORAGE_KEY, lang);
+        } catch (err) {
+            // 隐私模式等场景下写入失败：不影响本次切换
+        }
+
         EventBus.emit('language-changed', lang);
     },
 };
