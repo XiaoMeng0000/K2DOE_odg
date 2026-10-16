@@ -53,6 +53,7 @@ export const CONTENT_EN = {
             + 'Orbits are driven by Kepler analytic solutions and RK4 numerical integration, so a burn can be planned to the metre per second. '
             + 'Open beta 0.2.3 delivered the orbital framework; 0.2.4 added the resource economy and facility management; '
             + '0.2.5 and 0.2.6 made maneuver planning real — drop a node, drag a handle, chain a whole mission plan. '
+            + '0.3.0 splits time warp into two channels, so you can burn while time runs faster. '
             + 'Miss your burn? No worries — reload and try again!',
     },
 
@@ -70,7 +71,7 @@ export const CONTENT_EN = {
                 image: 'assets/images/screenshots/01.jpg',
                 title: 'Orbital Mechanics',
                 subtitle: 'KEPLER + RK4 ENGINE',
-                description: 'Keplerian coasting, RK4 thrust integration, SOI gravity takeover, and orbit prediction — with auto-protection when time-warp crosses SOI boundaries, so you never blow past a maneuver point. Orbits measured with invisible precision.',
+                description: 'Keplerian coasting, RK4 thrust integration, SOI gravity takeover, and orbit prediction. Two time-warp channels: physics warp runs 1x–4x inside live physics — steer and burn while time runs faster — while time warp reaches 10,000,000×. SOI crossings are protected automatically.',
             },
             {
                 id: 'vessel',
@@ -131,10 +132,23 @@ export const CONTENT_EN = {
         entries: [
             {
                 version: 'RECENT',
-                title: 'Current Cadence: Small Steps',
+                title: 'Current Cadence: Foundations First, Visuals Next',
                 items: [
                     'Since 0.2.4, [Escape Velocity] has been shipping smaller updates: fixes, polish, and focused features — 0.2.5 and 0.2.6 both follow that cadence.',
-                    '0.3.0 is already in development: configuration refactor and time-warp mechanics first, paving the way for larger content and visual upgrades.',
+                    'The 0.3.0 foundations are in: the six-domain configuration refactor and dual-channel time warp shipped with v0.3.0-beta1. Next up is the visual side.',
+                    'A next-generation renderer is being built in a separate prototype project (body glow, engine plumes, planet rotation, atmospheric scattering and more). Once solid, it moves into the game whole — the goal is a generational visual upgrade, not a patch-up.',
+                ],
+            },
+            {
+                version: 'v0.3.0-beta1',
+                title: 'Dual-Channel Time Warp & Refactor (pre-release)',
+                date: '2026-10-06',
+                items: [
+                    'Time warp splits into two channels: physics warp runs 1x–4x inside live physics, so steering, throttle and SAS all stay live — you can burn while time runs faster; time warp climbs to 10,000,000× and hands the vessel to orbital propagation for long coasting',
+                    'Controls: "." / "," change warp on the time channel, hold Alt for the physics channel; the warp grid tint and the top bar show which channel you are on',
+                    'Under the hood: configuration is split into six domains, and body/vessel textures are now declared where they are used — adding a body takes one config file and one image',
+                    'Fixes: physics warp at 4x no longer jumps straight to 10x; panel icons no longer degrade into emoji',
+                    'Old saves stay compatible; this release carries no visual update, and pre-release feel and copy will keep being polished',
                 ],
             },
             {
@@ -202,7 +216,8 @@ export const CONTENT_EN = {
         tag: 'VERSION STATUS',
         note: '',
         items: [
-            'Latest release: v0.2.6. In development: v0.3.0-alpha (pre-release). Full changelog in the timeline above.',
+            'Latest release: v0.2.6. Pre-release: v0.3.0-beta1 (dual-channel time warp and configuration refactor). Full changelog in the timeline above.',
+            'v0.3.0-beta1 is a pre-release: warp feel and UI copy are still being polished; data-config fields changed, while old saves stay compatible.',
             'Maneuver-node progress tracks the currently controlled vessel: node data persists in the save when you switch ships, but progress only advances on the controlled one.',
             'Multi-node plans are re-computed across frames: with a very long chain, the newest node near the tail may take a frame or two to show its full prediction. This is expected.',
             'Known issue: with no orbital inclination in this 2D model, Jool and Eeloo orbits intersect geometrically. A 19-year simulation confirms the current initial phase keeps the minimum center distance at roughly 3× the sum of SOI radii — safe today, but any future phase change needs re-evaluation.',
@@ -324,9 +339,9 @@ export const CONTENT_EN = {
             { key: 'Z / X', desc: 'Full throttle / cut throttle' },
             { key: 'T', desc: 'Toggle SAS attitude hold' },
             { key: 'G', desc: 'Cycle SAS pointing (prograde / retrograde / radial in / radial out)' },
-            { key: ', / .', desc: 'Lower / raise time-warp level (0x = paused)' },
+            { key: ', / .', desc: 'Time channel: lower / raise time warp (up to 10,000,000×; 0x = paused)' },
+            { key: 'Alt + , / .', desc: 'Physics channel: shift between 1x and 4x while the vessel stays in live physics (burn while time runs faster)' },
             { key: '\\', desc: 'Reset time warp to 1x' },
-            { key: 'Alt + , / .', desc: 'Fine time control between 1x and 4x' },
             { key: 'V', desc: 'Toggle orbital maneuver view' },
             { key: 'B', desc: 'Open facility panel when near a facility' },
             { key: 'Mouse wheel', desc: 'Zoom the view' },
@@ -348,8 +363,8 @@ export const CONTENT_EN = {
                 a: 'Modern desktop browsers — Chrome, Edge, Firefox — with ES Module and Web Audio support. A reasonably large desktop window is recommended.',
             },
             {
-                q: 'Why does my ship ignore input during time warp?',
-                a: 'By design: control input is ignored while time is accelerated. Drop back to 1x (press "\\" to reset) before steering or burning.',
+                q: 'What is the difference between time warp and physics warp?',
+                a: 'There are two channels. Time warp climbs up to 10,000,000× and hands the vessel to orbital propagation — control input is ignored, which suits long coasting. Physics warp stays between 1x and 4x with the vessel in live physics: steering, throttle and SAS all stay live, so you can burn while time runs faster. Press "." / "," for the time channel, hold Alt for the physics channel. If you are not in physics warp and want to steer or burn, press "\\" to reset time to 1x first.',
             },
             {
                 q: 'It runs slowly. What can I do?',
