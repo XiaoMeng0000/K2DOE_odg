@@ -144,6 +144,13 @@ export const CONTENT_EN = {
         archiveNote: 'Maintained in step with the in-game bulletin — every bullet is something that actually shipped.',
         previewCount: 3,
         moreLabel: 'VIEW FULL UPDATE LOG',
+        // Version card status marker: shown after comparing with SITE_CONFIG.version / devVersion
+        badgeLatest: 'LATEST STABLE',
+        badgeDev: 'PRE-RELEASE',
+        // Version card meta rows (label + value)
+        metaDateLabel: 'RELEASED',
+        metaItemsLabel: 'HIGHLIGHTS',
+        metaItemsFormat: '{count} items',
         entries: [
             {
                 version: 'RECENT',
@@ -397,6 +404,21 @@ export const CONTENT_EN = {
         tag: 'UPDATES',
         intro: 'Maintained in step with the in-game bulletin, newest version first.',
         backLabel: '← Back to home',
+        // Accessible name for the in-page anchor index (labels reuse section titles, no duplicate copy)
+        chipsLabel: 'On this page',
+    },
+
+    // —— Screenshot gallery (enlarged view of the home page screenshots) ——
+    gallery: {
+        dialogLabel: 'Screenshot preview',
+        openLabelFormat: 'Zoom in: {title}',
+        closeLabel: 'Close',
+        counterFormat: '{current} / {total}',
+    },
+
+    // —— Back to top ——
+    toTop: {
+        label: 'Back to top',
     },
 
     // —— Footer ——

@@ -3,7 +3,7 @@
 // ==========================================================================
 // 官网入口（三页共用：index / news / guide）
 // 页面由 <body data-page="home|news|guide"> 标识；倒计时只在首页初始化
-// 初始化顺序：内容渲染 → 导航 → 倒计时 → 星空背景 → 滚动动效
+// 初始化顺序：内容渲染 → 导航 → 倒计时 → 星空背景 → 滚动动效 → 截图画廊 → 回到顶部
 // 各模块通过 State / EventBus 通信，互不直接耦合
 // ==========================================================================
 
@@ -12,6 +12,8 @@ import { initNavigation } from './modules/navigation.js';
 import { initStarfield } from './modules/starfield.js';
 import { initCountdown } from './modules/countdown.js';
 import { initScrollReveal } from './modules/scroll-reveal.js';
+import { initLightbox } from './modules/lightbox.js';
+import { initToTop } from './modules/to-top.js';
 
 // 当前页面标识（home / news / guide）
 const PAGE = document.body.dataset.page || 'home';
@@ -34,6 +36,8 @@ function boot() {
     }
     initStarfield(document.getElementById('starfield'));
     initScrollReveal();
+    initLightbox();
+    initToTop();
 
     // 控制台输出页面信息，方便调试
     // TEMP: 上线前可移除

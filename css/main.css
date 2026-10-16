@@ -41,6 +41,9 @@
     /* —— 深空背景 —— */
     --bg-space: #05070b;
 
+    /* —— 遮罩（截图画廊等模态层） —— */
+    --overlay-scrim: rgba(0, 0, 0, 0.72);
+
     /* —— 字体：正文用系统无衬线，数据用等宽 —— */
     --font-body: 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei',
         system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -101,6 +104,7 @@ a:hover {
 /* 深底卡片内的焦点环改用 HUD 蓝，保证与卡底有足够对比 */
 .contact-card:focus-visible,
 .feature-card:focus-visible,
+.feature-media:focus-visible,
 .update-card:focus-visible,
 .step-card:focus-visible,
 .faq-q:focus-visible,
@@ -224,6 +228,11 @@ main,
 /* —— 通用板块 —— */
 .section {
     padding: 84px 0;
+}
+
+/* 锚点跳转留出固定顶栏的高度，避免目标区块被顶栏压住 */
+section[id] {
+    scroll-margin-top: calc(var(--topbar-h) + 18px);
 }
 
 .section-inner {
@@ -549,14 +558,28 @@ body[data-page='guide'] .section-title::before {
     order: 2;
 }
 
-/* 实机画面容器 */
+/* 实机画面容器（可点击放大：触发元素是 <button>，放大行为见 lightbox.js） */
 .feature-media {
     position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
     aspect-ratio: 16 / 9;
     border: 1px solid var(--theme-card-border);
     border-radius: var(--radius);
     background: var(--theme-panel-deep);
     overflow: hidden;
+    cursor: zoom-in;
+    transition: border-color 0.2s ease;
+}
+
+.feature-media:hover {
+    border-color: var(--theme-border-hover);
+}
+
+/* 原生模态对话框不可用时由 lightbox.js 停用，此时不再显示放大光标 */
+.feature-media:disabled {
+    cursor: default;
 }
 
 .feature-img {
@@ -659,6 +682,7 @@ body[data-page='guide'] .section-title::before {
 }
 
 .update-card {
+    position: relative;
     background: var(--theme-panel);
     border: 1px solid var(--theme-card-border);
     border-radius: var(--radius);
@@ -670,9 +694,20 @@ body[data-page='guide'] .section-title::before {
     border-color: var(--theme-border-hover);
 }
 
+/* 最新正式版：卡片左侧 2px 状态条（--data-green 的唯一落点，本体规范 §2.3 选中态绿条语义） */
+.update-card.is-latest::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--data-green);
+}
+
 .update-head {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     gap: 12px;
     padding: 8px 16px;
@@ -686,11 +721,50 @@ body[data-page='guide'] .section-title::before {
     letter-spacing: 0.08em;
 }
 
-.update-date {
-    color: rgba(255, 255, 255, 0.72);
+/* 状态标记：与 SITE_CONFIG.version / devVersion 比对后推导，不新增内容字段 */
+.update-badge {
+    padding: 2px 8px;
+    border: 1px solid var(--theme-menu-border);
+    border-radius: var(--radius);
+    background: var(--theme-panel-deep);
+    color: var(--text-bright);
     font-family: var(--font-mono);
-    font-size: 0.76rem;
-    letter-spacing: 0.08em;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+}
+
+.update-badge.badge-dev {
+    border-color: var(--theme-card-border);
+    color: var(--text-mid);
+}
+
+/* 版本卡元信息行：label + 值（值等宽 + 等宽数字） */
+.update-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 28px;
+    padding: 12px 16px 0;
+}
+
+.update-meta-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.update-meta-label {
+    color: var(--text-weak);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+}
+
+.update-meta-value {
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
 }
 
 .update-title {
@@ -1044,6 +1118,32 @@ body[data-page='guide'] .section-title::before {
     color: var(--text-bright);
 }
 
+/* —— 本页锚点索引（只做跳转，不做筛选） —— */
+.topic-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.topic-chip {
+    padding: 5px 14px;
+    border: 1px solid var(--theme-card-border);
+    border-radius: var(--radius);
+    background: var(--theme-panel);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.1em;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.topic-chip:hover {
+    color: var(--text-bright);
+    border-color: var(--theme-border-hover);
+    background: var(--theme-active-bg);
+}
+
 /* —— 页尾动作 —— */
 .page-foot {
     padding-top: 16px;
@@ -1245,6 +1345,105 @@ html.js .reveal.in {
     transform: none;
 }
 
+/* —— 截图画廊（原生 <dialog>，遮罩与本体规范 §3.12 文档页一致） —— */
+.lightbox {
+    /* margin: auto 覆盖了 UA 的对话框居中（全局 * { margin: 0 } 重置会连带吃掉 UA 值） */
+    margin: auto;
+    max-width: min(1120px, 92vw);
+    padding: 0;
+    border: 1px solid var(--theme-menu-border);
+    border-radius: var(--radius);
+    background: var(--theme-panel);
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+.lightbox::backdrop {
+    background: var(--overlay-scrim);
+    backdrop-filter: blur(6px);
+}
+
+.lightbox-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--theme-card-border);
+    background: var(--theme-panel-deep);
+}
+
+.lightbox-counter {
+    color: var(--text-weak);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
+    font-variant-numeric: tabular-nums;
+}
+
+.lightbox-close {
+    padding: 4px 14px;
+    border: 1px solid var(--theme-card-border);
+    border-radius: var(--radius);
+    background: var(--theme-panel);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.lightbox-close:hover {
+    color: var(--text-bright);
+    border-color: var(--theme-border-hover);
+    background: var(--theme-active-bg);
+}
+
+/* 放大视图完整显示截图：contain + 视口上限，不做裁切、不撑出滚动条 */
+.lightbox-img {
+    display: block;
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    background: var(--theme-panel-deep);
+}
+
+/* —— 回到顶部（按钮由 to-top.js 创建，无 JS 时不存在） —— */
+.to-top {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 90;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--theme-card-border);
+    border-radius: var(--radius);
+    background: var(--theme-panel);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    cursor: pointer;
+    /* 用 visibility 而非 display：隐藏时不可聚焦，也不会留下可 Tab 的空按钮。
+       显隐不做过渡（瞬时切换）：既避免与动画时钟耦合，也保证"隐藏=不可聚焦"立刻成立 */
+    opacity: 0;
+    visibility: hidden;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.to-top:hover {
+    color: var(--text-bright);
+    border-color: var(--theme-border-hover);
+    background: var(--theme-active-bg);
+}
+
 /* —— 无 JS 提示 —— */
 .noscript-warn {
     position: fixed;
@@ -1375,5 +1574,26 @@ html.js .reveal.in {
     .cta-btn {
         width: 100%;
         padding: 12px 20px;
+    }
+
+    /* 截图画廊：窄屏收紧图片上限；回到顶部缩小并贴近边角，避免压住页尾按钮 */
+    .lightbox {
+        max-width: 94vw;
+    }
+
+    .lightbox-img {
+        max-height: 68vh;
+    }
+
+    .to-top {
+        right: 14px;
+        bottom: 14px;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .update-meta {
+        gap: 4px 18px;
     }
 }

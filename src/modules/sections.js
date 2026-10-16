@@ -53,6 +53,22 @@ function setSectionHead(id, title, tag) {
     }
 }
 
+/**
+ * 填充模板占位符（形如 {title}）；文案本体仍留在 src/config，代码只做替换
+ * @param {string} template 模板文本
+ * @param {object} vars 占位符取值
+ * @returns {string}
+ */
+function fillTemplate(template, vars) {
+    if (!template) {
+        return '';
+    }
+    return Object.keys(vars).reduce(
+        (text, key) => text.split('{' + key + '}').join(vars[key]),
+        template
+    );
+}
+
 // ============================ 首页 ============================
 
 // Hero：版本行 + 主/次 CTA + 等宽数据条（标题与副文由 countdown.js 维护）
@@ -150,7 +166,15 @@ function renderFeatures(c) {
             feature.imageSide === 'right' ? 'row-media-right' : 'row-media-left'
         );
 
-        const media = el('div', 'feature-media');
+        const media = el('button', 'feature-media');
+        media.type = 'button';
+        // 无障碍名走配置模板（放大行为由 lightbox.js 委托绑定）
+        const zoomLabel = fillTemplate(c.gallery && c.gallery.openLabelFormat, {
+            title: feature.title,
+        });
+        if (zoomLabel) {
+            media.setAttribute('aria-label', zoomLabel);
+        }
         const img = el('img', 'feature-img');
         img.src = feature.image;
         img.alt = feature.title;
@@ -200,14 +224,47 @@ function renderUpdates(c, limit, head) {
     entries.forEach((entry) => {
         const card = el('article', 'update-card reveal');
 
+        // 状态标记由既有配置比对推导（正式版 / 预发布），不新增内容字段
+        const isLatest = !!SITE_CONFIG.version && entry.version === SITE_CONFIG.version;
+        const isDev = !!SITE_CONFIG.devVersion && entry.version === SITE_CONFIG.devVersion;
+        if (isLatest) {
+            // 最新正式版：卡片左侧 2px 状态条（--data-green 的唯一落点）
+            card.classList.add('is-latest');
+        }
+
         const head = el('div', 'update-head');
         head.appendChild(el('span', 'update-version', entry.version));
-        if (entry.date) {
-            head.appendChild(el('span', 'update-date', entry.date));
+
+        const badgeLabel = isLatest ? c.updates.badgeLatest : (isDev ? c.updates.badgeDev : '');
+        if (badgeLabel) {
+            const badge = el('span', 'update-badge' + (isDev ? ' badge-dev' : ''), badgeLabel);
+            head.appendChild(badge);
         }
         card.appendChild(head);
 
         card.appendChild(el('h3', 'update-title', entry.title));
+
+        // 元信息行：label + 值（值等宽 + tabular-nums）；只渲染有真实数据的字段
+        const metaRows = [];
+        if (entry.date) {
+            metaRows.push({ label: c.updates.metaDateLabel, value: entry.date });
+        }
+        if (entry.items && entry.items.length) {
+            metaRows.push({
+                label: c.updates.metaItemsLabel,
+                value: fillTemplate(c.updates.metaItemsFormat, { count: entry.items.length }),
+            });
+        }
+        if (metaRows.length) {
+            const meta = el('div', 'update-meta');
+            metaRows.forEach((row) => {
+                const line = el('div', 'update-meta-row');
+                line.appendChild(el('span', 'update-meta-label', row.label));
+                line.appendChild(el('span', 'update-meta-value', row.value));
+                meta.appendChild(line);
+            });
+            card.appendChild(meta);
+        }
 
         const ul = el('ul', 'update-items');
         (entry.items || []).forEach((item) => {
@@ -376,6 +433,30 @@ function renderPageHead(title, tag, intro) {
     }
 }
 
+// news 页锚点索引：只做跳转、不做筛选；标签复用各区块既有标题，避免重复维护文案
+function renderTopicChips(c) {
+    const box = document.getElementById('topic-chips');
+    if (!box) {
+        return;
+    }
+    box.textContent = '';
+    if (c.newsPage.chipsLabel) {
+        box.setAttribute('aria-label', c.newsPage.chipsLabel);
+    }
+
+    [
+        { href: '#updates', label: c.updates.archiveTitle },
+        { href: '#notices', label: c.notices.title },
+    ].forEach((item) => {
+        if (!item.label) {
+            return;
+        }
+        const chip = el('a', 'topic-chip', item.label);
+        chip.href = item.href;
+        box.appendChild(chip);
+    });
+}
+
 // 二级页页尾动作（去玩最新版 + 返回首页）
 function renderPageActions(c) {
     const play = document.getElementById('page-play');
@@ -506,6 +587,7 @@ export function renderAll() {
     if (PAGE === 'news') {
         // 页头与板块头各用各自字段：h1「版本动态」+ 分区「完整版本时间线」，标题与角标均不重复
         renderPageHead(c.newsPage.title, c.newsPage.tag, c.newsPage.intro);
+        renderTopicChips(c);
         renderUpdates(c, 0, {
             title: c.updates.archiveTitle,
             tag: c.updates.archiveTag,

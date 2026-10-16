@@ -150,6 +150,13 @@ export const CONTENT_ZH = {
         // 首页预览条数
         previewCount: 3,
         moreLabel: '查看全部版本动态',
+        // 版本卡状态标记：与 SITE_CONFIG.version / devVersion 比对后显示，不新增内容字段
+        badgeLatest: '最新正式版',
+        badgeDev: '预发布',
+        // 版本卡元信息行（label + 值）
+        metaDateLabel: '发行日期',
+        metaItemsLabel: '要点',
+        metaItemsFormat: '{count} 条',
         // entries 自上而下渲染；version 徽章 + date（可空）+ title + 要点列表
         entries: [
             {
@@ -407,6 +414,21 @@ export const CONTENT_ZH = {
         tag: 'UPDATES',
         intro: '与游戏内公告栏同步维护，按版本倒序排列。',
         backLabel: '← 返回首页',
+        // 本页锚点索引的无障碍名（标签复用各区块既有标题，不重复维护文案）
+        chipsLabel: '本页索引',
+    },
+
+    // —— 截图画廊（首页实机截图的放大视图） ——
+    gallery: {
+        dialogLabel: '截图预览',
+        openLabelFormat: '放大查看：{title}',
+        closeLabel: '关闭',
+        counterFormat: '{current} / {total}',
+    },
+
+    // —— 回到顶部 ——
+    toTop: {
+        label: '回到顶部',
     },
 
     // —— 页脚 ——
