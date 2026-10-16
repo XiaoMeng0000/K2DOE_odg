@@ -15,7 +15,14 @@ export const CONTENT_EN = {
             { id: 'guide', label: 'GUIDE', href: 'index.html#guide' },
             { id: 'contact', label: 'CONTACT', href: 'index.html#contact' },
         ],
-        langSwitchTo: '中文',
+        // Language switch button: `text` is the target language name and carries its own `lang`
+        // marking so screen readers pronounce it correctly; `ariaLabel` describes the action
+        // and follows the active interface language.
+        langSwitch: {
+            text: '中文',
+            lang: 'zh-CN',
+            ariaLabel: 'Switch interface language to Chinese',
+        },
     },
 
     // —— Home · Hero ——
@@ -30,16 +37,18 @@ export const CONTENT_EN = {
         },
         launched: 'NOW LIVE',
         launchedSub: 'Orbit Engineer v0.2.6 is out — now you can draw a whole mission plan onto the orbit itself.',
-        // Technical spec strip (mono data line under the hero)
+        // Technical spec strip (mono data line under the hero: label + value, 3 cells)
         specs: [
-            '16 CELESTIAL BODIES',
-            'KEPLER + RK4 ENGINES',
-            'UP TO 10,000,000× TIME WARP',
-            'ZERO-DEPENDENCY BROWSER BUILD',
+            { label: 'BODIES', value: '16' },
+            { label: 'ORBIT ENGINE', value: 'KEPLER + RK4' },
+            { label: 'TIME WARP', value: '10,000,000×' },
         ],
         cta: {
             playLabel: 'PLAY NOW',
+            guideLabel: 'HOW TO FLY',
         },
+        // Accessible name for the decorative navball SVG, written by sections.js per language
+        navballAriaLabel: 'Navball',
     },
 
     // —— Home · About ——
@@ -124,9 +133,15 @@ export const CONTENT_EN = {
 
     // —— Version Updates (home shows the first previewCount entries; news.html shows all) ——
     updates: {
+        // Home section head ("Version Updates")
         title: 'Version Updates',
         tag: 'UPDATES',
+        // news.html section head (kept distinct from the page h1 to avoid duplicate title/tag)
+        archiveTitle: 'Full Version Timeline',
+        archiveTag: 'TIMELINE',
         note: 'Follow the version timeline — how Orbit Engineer got to where it is today.',
+        // news.html section intro (home keeps `note`)
+        archiveNote: 'Maintained in step with the in-game bulletin — every bullet is something that actually shipped.',
         previewCount: 3,
         moreLabel: 'VIEW FULL UPDATE LOG',
         entries: [
@@ -306,7 +321,7 @@ export const CONTENT_EN = {
     // —— Getting Started (guide.html) ——
     guide: {
         title: 'Getting Started',
-        tag: 'GETTING STARTED',
+        tag: 'QUICK START',
         intro: 'Three steps to your first maneuver. The in-game encyclopedia covers the rest.',
         stepsTitle: 'Start Playing',
         steps: [
@@ -377,7 +392,10 @@ export const CONTENT_EN = {
 
     // —— Updates page (news.html) ——
     newsPage: {
-        intro: 'The full version timeline, maintained in step with the in-game bulletin. Every bullet is something that actually shipped.',
+        // Page head h1 and tag
+        title: 'Version Updates',
+        tag: 'UPDATES',
+        intro: 'Maintained in step with the in-game bulletin, newest version first.',
         backLabel: '← Back to home',
     },
 

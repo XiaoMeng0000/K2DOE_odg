@@ -13,10 +13,12 @@ const VISIBLE_THRESHOLD = 0.12;
 /**
  * 初始化滚动渐入动效
  * 观察所有 .reveal 元素，进入视口后添加 .in 类并解除观察
+ * 与白页兜底的分工：初始隐藏态由 CSS 的 `html.js .reveal` 承担（无 JS 时正文直接可见，
+ * 见 css/main.css「滚动渐入动效」段与三个页面的 head 内联切类），本模块只负责“何时显示”
  */
 export function initScrollReveal() {
     if (!('IntersectionObserver' in window)) {
-        // 不支持 IntersectionObserver：直接显示所有元素，不做动效
+        // 不支持 IntersectionObserver：立即显示全部内容，不做动效
         document.querySelectorAll('.reveal').forEach((t) => t.classList.add('in'));
         return;
     }

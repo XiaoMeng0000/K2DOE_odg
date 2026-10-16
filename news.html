@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html class="no-js" lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,8 @@
     <meta name="theme-color" content="#000000">
     <title>版本动态 | KSP2D:OE</title>
     <link rel="stylesheet" href="css/main.css">
+    <!-- 无 JS 兜底：解析前把 no-js 换成 js，用纯 CSS class 切换保证正文永不被永久隐藏 -->
+    <script>document.documentElement.className = 'js';</script>
 </head>
 <body data-page="news">
 
@@ -43,8 +45,8 @@
         <section id="updates" class="section updates">
             <div class="section-inner">
                 <div class="section-head reveal" id="updates-head">
-                    <h2 class="section-title"><span class="t">版本动态</span></h2>
-                    <span class="section-tag">UPDATES</span>
+                    <h2 class="section-title"><span class="t">完整版本时间线</span></h2>
+                    <span class="section-tag">TIMELINE</span>
                 </div>
                 <p class="section-intro reveal" id="updates-intro"></p>
                 <div class="updates-list" id="updates-list"></div>

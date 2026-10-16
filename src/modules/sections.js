@@ -55,12 +55,18 @@ function setSectionHead(id, title, tag) {
 
 // ============================ 首页 ============================
 
-// Hero：版本行 + 主 CTA（标题与副文由 countdown.js 维护）
+// Hero：版本行 + 主/次 CTA + 等宽数据条（标题与副文由 countdown.js 维护）
 function renderHero(c) {
     const versionLine = document.getElementById('launched-version');
     if (versionLine) {
         versionLine.textContent = SITE_CONFIG.version
             + (SITE_CONFIG.devVersion ? ' · dev ' + SITE_CONFIG.devVersion : '');
+    }
+
+    // 导航球图形元素的无障碍名（跟随语言；静态 HTML 的中文是无 JS 兜底）
+    const navball = document.getElementById('navball-hero');
+    if (navball && c.hero && c.hero.navballAriaLabel) {
+        navball.setAttribute('aria-label', c.hero.navballAriaLabel);
     }
 
     const ctaBox = document.getElementById('launched-cta');
@@ -72,12 +78,27 @@ function renderHero(c) {
         play.target = '_blank';
         play.rel = 'noopener';
         ctaBox.appendChild(play);
+
+        // 第二动线：站内上手指南页（次级描边按钮样式）
+        if (c.hero.cta.guideLabel) {
+            const guide = el('a', 'cta-btn', c.hero.cta.guideLabel);
+            guide.href = 'guide.html';
+            ctaBox.appendChild(guide);
+        }
     }
 
-    // 技术规格行（等宽数据条）
+    // 等宽数据条（3 格 label:value）；容器保留 HTML 上的 .launched-specs 类，仅追加 .hud-readout
     const specsBox = document.getElementById('launched-specs');
     if (specsBox && c.hero && c.hero.specs) {
-        specsBox.textContent = c.hero.specs.join(' · ');
+        specsBox.textContent = '';
+        specsBox.classList.add('hud-readout');
+
+        c.hero.specs.forEach((spec) => {
+            const cell = el('div', 'hud-readout-item');
+            cell.appendChild(el('span', 'hud-readout-label', spec.label));
+            cell.appendChild(el('span', 'hud-readout-value', spec.value));
+            specsBox.appendChild(cell);
+        });
     }
 }
 
@@ -154,12 +175,18 @@ function renderFeatures(c) {
  * 版本动态时间线
  * @param {object} c 文案数据
  * @param {number} limit 显示条数上限；0 或负数表示全部（news 页）
+ * @param {object} [head] 板块头与引言文案；缺省用 updates.title / tag / note（首页）
  */
-function renderUpdates(c, limit) {
-    setSectionHead('updates-head', c.updates.title, c.updates.tag);
+function renderUpdates(c, limit, head) {
+    const h = head || {
+        title: c.updates.title,
+        tag: c.updates.tag,
+        note: c.updates.note,
+    };
+    setSectionHead('updates-head', h.title, h.tag);
     const intro = document.getElementById('updates-intro');
     if (intro) {
-        intro.textContent = c.updates.note || '';
+        intro.textContent = h.note || '';
     }
 
     const list = document.getElementById('updates-list');
@@ -477,8 +504,13 @@ export function renderAll() {
     const c = I18n.getContent();
 
     if (PAGE === 'news') {
-        renderPageHead(c.updates.title, c.updates.tag, c.newsPage.intro);
-        renderUpdates(c, 0);
+        // 页头与板块头各用各自字段：h1「版本动态」+ 分区「完整版本时间线」，标题与角标均不重复
+        renderPageHead(c.newsPage.title, c.newsPage.tag, c.newsPage.intro);
+        renderUpdates(c, 0, {
+            title: c.updates.archiveTitle,
+            tag: c.updates.archiveTag,
+            note: c.updates.archiveNote,
+        });
         renderNotices(c);
         renderPageActions(c);
     } else if (PAGE === 'guide') {

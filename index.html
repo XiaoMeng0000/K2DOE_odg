@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html class="no-js" lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,8 @@
     <meta name="theme-color" content="#05070b">
     <title>KSP2D:OE | 坎巴拉太空计划2D:轨道工程师</title>
     <link rel="stylesheet" href="css/main.css">
+    <!-- 无 JS 兜底：解析前把 no-js 换成 js，用纯 CSS class 切换保证正文永不被永久隐藏 -->
+    <script>document.documentElement.className = 'js';</script>
 </head>
 <body data-page="home">
 
@@ -32,12 +34,25 @@
         <!-- Hero —— 正式运营状态卡（倒计时结构仅当公测时间未到时由 countdown.js 动态生成） -->
         <section id="hero" class="section hero">
             <div class="countdown-panel" id="countdown-panel">
+
+                <!-- 导航球图形元素（纯内联 SVG，零依赖；配色全部走 css/main.css :root 变量）
+                     aria-label 由 sections.js 按当前语言写入，此处中文为无 JS 兜底 -->
+                <svg class="navball-hero" id="navball-hero" viewBox="0 0 168 168" role="img" aria-label="导航球">
+                    <circle class="navball-plate" cx="84" cy="84" r="80"></circle>
+                    <circle class="navball-inner" cx="84" cy="84" r="62"></circle>
+                    <circle class="navball-inner" cx="84" cy="84" r="30"></circle>
+                    <g transform="rotate(-20 84 84)">
+                        <ellipse class="navball-orbit" cx="84" cy="84" rx="76" ry="30"></ellipse>
+                    </g>
+                    <circle class="navball-node" cx="84" cy="32" r="2.5"></circle>
+                </svg>
+
                 <div class="launched-msg" id="launched-msg" hidden>
                     <p class="launched-title"></p>
                     <p class="launched-version" id="launched-version"></p>
                     <p class="launched-sub"></p>
                     <div class="launched-cta" id="launched-cta"></div>
-                    <p class="launched-specs" id="launched-specs"></p>
+                    <p class="launched-specs hud-readout" id="launched-specs"></p>
                 </div>
             </div>
         </section>

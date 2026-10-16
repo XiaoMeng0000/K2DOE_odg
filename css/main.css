@@ -34,6 +34,10 @@
     --data: #e0a13a;                /* 数据强调（版本号 / 日期 / 键位） */
     --danger: #d9534f;              /* 警告 */
 
+    /* —— 本体语义色迁移（本体规范 §2.3；只用于 HUD 语义位置，不替代上面两个语义色） —— */
+    --accent-hud: #88ccff;          /* HUD 蓝：`// ` 分区标题前缀 */
+    --data-green: #3dff3d;          /* 进度绿：进度条填充 / 选中态绿条 */
+
     /* —— 深空背景 —— */
     --bg-space: #05070b;
 
@@ -84,6 +88,24 @@ a:hover {
 ::selection {
     background: var(--theme-btn-selected);
     color: var(--text-bright);
+}
+
+/* —— 键盘焦点环（可达性） ——
+   仅键盘焦点可见；用 outline（不占布局、不发光），颜色走 :root 变量 */
+:focus-visible {
+    outline: 2px solid var(--theme-border-hover);
+    outline-offset: 2px;
+    border-radius: var(--radius);
+}
+
+/* 深底卡片内的焦点环改用 HUD 蓝，保证与卡底有足够对比 */
+.contact-card:focus-visible,
+.feature-card:focus-visible,
+.update-card:focus-visible,
+.step-card:focus-visible,
+.faq-q:focus-visible,
+.legal-summary:focus-visible {
+    outline-color: var(--accent-hud);
 }
 
 /* —— 星空背景（Canvas 渲染层） —— */
@@ -225,6 +247,14 @@ main,
     font-weight: 600;
     letter-spacing: 0.01em;
     color: var(--text-bright);
+}
+
+/* 分区标题 `// ` 前缀（本体规范 §3.2 同源；官网规范 §一.4）
+   用伪元素而非文案，前缀不进 i18n 词条；按规范只在二级页分区头生效，首页与三页 h1 均不加 */
+body[data-page='news'] .section-title::before,
+body[data-page='guide'] .section-title::before {
+    content: '// ';
+    color: var(--accent-hud);
 }
 
 .section-tag {
@@ -414,14 +444,86 @@ main,
     color: var(--text-bright);
 }
 
-/* Hero 技术规格行（等宽数据条，仪器感信息） */
+/* Hero 数据条容器：结构选择器(.launched-specs)负责 Hero 内的间距与入场节奏，
+   组件类(.hud-readout)负责布局与排版，两者属性不重叠 */
 .launched-specs {
     margin-top: 26px;
+    animation: hero-in 0.7s ease 0.42s both;
+}
+
+/* —— Hero 导航球（内联 SVG；圆盘底 + 双层描边 + 轨道椭圆） ——
+   图形元素：填充用 --theme-panel-deep，描边用 --theme-menu-border / --theme-card-border，
+   轨道椭圆用 --accent-hud；色值全部走变量，不在 SVG 属性里硬编码 */
+.navball-hero {
+    display: block;
+    width: 168px;
+    height: 168px;
+    margin: 0 auto 26px;
+    animation: hero-in 0.7s ease both;
+}
+
+.navball-plate {
+    fill: var(--theme-panel-deep);
+    stroke: var(--theme-menu-border);
+    stroke-width: 1;
+}
+
+.navball-inner {
+    fill: none;
+    stroke: var(--theme-card-border);
+    stroke-width: 1;
+}
+
+.navball-orbit {
+    fill: none;
+    stroke: var(--accent-hud);
+    stroke-width: 1;
+}
+
+.navball-node {
+    fill: var(--data);
+}
+
+/* —— Hero 数据条（3 格等宽 label:value，格间 1px 实线分隔） —— */
+.hud-readout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0;
     color: var(--text-weak);
     font-family: var(--font-mono);
     font-size: 0.78rem;
     letter-spacing: 0.14em;
-    animation: hero-in 0.7s ease 0.42s both;
+}
+
+.hud-readout-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 168px;
+    padding: 8px 22px;
+    border-left: 1px solid var(--theme-border-row);
+}
+
+.hud-readout-item:first-child {
+    border-left: none;
+}
+
+.hud-readout-label {
+    color: var(--text-weak);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+}
+
+.hud-readout-value {
+    color: var(--text-bright);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
 }
 
 /* —— 玩法特色 —— */
@@ -1125,14 +1227,20 @@ main,
     font-size: 0.8rem;
 }
 
-/* —— 滚动渐入动效 —— */
+/* —— 滚动渐入动效 ——
+   初始隐藏态只在 <html class="js"> 时启用：无 JS 时正文直接可见（不依赖脚本），
+   有 JS 时 html 上的 js 类在解析前就已就位，因此不会出现"先显示后隐藏"的闪烁。
+   注意：显示态必须用 `html.js .reveal.in` 覆盖 `html.js .reveal`，否则会被后者的特异性压住。 */
 .reveal {
-    opacity: 0;
-    transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.reveal.in {
+html.js .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+html.js .reveal.in {
     opacity: 1;
     transform: none;
 }
@@ -1188,6 +1296,17 @@ main,
     .page-title {
         font-size: 1.7rem;
     }
+
+    /* Hero 数据条：窄屏收窄单格，保持 3 格同行不溢出 */
+    .hud-readout-item {
+        min-width: 132px;
+        padding: 8px 14px;
+    }
+
+    .navball-hero {
+        width: 132px;
+        height: 132px;
+    }
 }
 
 @media (max-width: 640px) {
@@ -1235,6 +1354,22 @@ main,
     .section-head {
         flex-direction: column;
         gap: 4px;
+    }
+
+    /* Hero 数据条：超窄屏转纵向堆叠，分隔线由左侧改到顶部 */
+    .hud-readout {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hud-readout-item {
+        min-width: 0;
+        border-left: none;
+        border-top: 1px solid var(--theme-border-row);
+    }
+
+    .hud-readout-item:first-child {
+        border-top: none;
     }
 
     .cta-btn {

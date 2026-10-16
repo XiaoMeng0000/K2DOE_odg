@@ -17,8 +17,13 @@ export const CONTENT_ZH = {
             { id: 'guide', label: '上手指南', href: 'index.html#guide' },
             { id: 'contact', label: '联系我们', href: 'index.html#contact' },
         ],
-        // 语言切换按钮显示的目标语言名
-        langSwitchTo: 'EN',
+        // 语言切换按钮：显示目标语言名（text 自带该语言的 lang 标注，供读屏正确发音）
+        // ariaLabel 描述“点击后会发生什么”，随当前界面语言
+        langSwitch: {
+            text: 'EN',
+            lang: 'en',
+            ariaLabel: '切换界面语言为英文',
+        },
     },
 
     // —— 首页 · Hero ——
@@ -35,17 +40,19 @@ export const CONTENT_ZH = {
         // 正式运营状态文案
         launched: '正式运营中',
         launchedSub: '轨道工程师 v0.2.6 正式版已发布 —— 现在，你可以把整段任务的点火计划画在轨道上。',
-        // 技术规格行（等宽数据条，用于 Hero 下方的仪器感信息）
+        // 技术规格（等宽数据条：label:value 两段式，Hero 下方 3 格）
         specs: [
-            '16 颗天体',
-            '开普勒 + RK4 双引擎',
-            '1000 万倍时间加速',
-            '零依赖浏览器运行',
+            { label: '天体', value: '16 颗' },
+            { label: '轨道引擎', value: '开普勒 + RK4' },
+            { label: '时间加速', value: '1000 万倍' },
         ],
-        // CTA 按钮（「立即试玩」链接见 site-config.js links.play）
+        // CTA 按钮（「立即试玩」链接见 site-config.js links.play；「上手指南」为站内二级页）
         cta: {
             playLabel: '立即试玩',
+            guideLabel: '看怎么起飞',
         },
+        // 导航球图形（装饰性 SVG）的无障碍名，由 sections.js 按语言写入
+        navballAriaLabel: '导航球',
     },
 
     // —— 首页 · 游戏简介 ——
@@ -131,9 +138,15 @@ export const CONTENT_ZH = {
 
     // —— 版本动态（首页显示前 previewCount 条，news.html 显示全部） ——
     updates: {
+        // 首页板块头（首页「版本动态」）
         title: '版本动态',
         tag: 'UPDATES',
+        // news 页板块头（与页头 h1 区分，避免标题/角标重复）
+        archiveTitle: '完整版本时间线',
+        archiveTag: 'TIMELINE',
         note: '沿着版本时间线，看轨道工程师如何一步步走到今天。',
+        // news 页板块引言（首页不显示；首页用 note）
+        archiveNote: '与游戏内公告栏同步维护，每条要点都是这一版真正落地的东西。',
         // 首页预览条数
         previewCount: 3,
         moreLabel: '查看全部版本动态',
@@ -389,7 +402,10 @@ export const CONTENT_ZH = {
 
     // —— 版本动态页（news.html）页面级文案 ——
     newsPage: {
-        intro: '与游戏内公告栏同步维护的完整版本时间线。每条要点都是这一版真正落地的东西。',
+        // 页头 h1 与角标
+        title: '版本动态',
+        tag: 'UPDATES',
+        intro: '与游戏内公告栏同步维护，按版本倒序排列。',
         backLabel: '← 返回首页',
     },
 

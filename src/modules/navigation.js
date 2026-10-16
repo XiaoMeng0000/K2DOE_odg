@@ -20,6 +20,12 @@ const PAGE_TO_NAV = {
     guide: 'guide',
 };
 
+// 内部语言码 → <html lang> / 语言按钮 lang 属性值
+const STATE_LANG_ATTR = {
+    zh: 'zh-CN',
+    en: 'en',
+};
+
 // 首页板块 id → 导航项 id（滚动高亮）
 // 更新记录与版权归入各自最相关的导航项，避免滚动时高亮来回跳动
 const SECTION_TO_NAV = {
@@ -56,6 +62,20 @@ export function initNavigation() {
         });
     }
 
+    // —— 当前页语义（读屏可辨） ——
+    // visualActive：首页随滚动高亮是"当前位置"提示，用 class 表达；
+    // aria-current=page 只标在"当前页面"对应的导航项上，滚动不改变它
+    function applyCurrent() {
+        const currentPageId = PAGE_TO_NAV[page] || 'home';
+        links.forEach((a) => {
+            if (a.dataset.nav === currentPageId) {
+                a.setAttribute('aria-current', 'page');
+            } else {
+                a.removeAttribute('aria-current');
+            }
+        });
+    }
+
     // —— 渲染导航链接 ——
     function renderLinks() {
         const content = I18n.getContent();
@@ -73,8 +93,17 @@ export function initNavigation() {
             links.push(a);
         });
 
-        // 同步语言按钮显示目标语言
-        langSwitch.textContent = content.nav.langSwitchTo;
+        // 同步语言按钮：
+        // text = 目标语言名（按钮自身文本），lang = 该文本的语言（读数发音用），
+        // aria-label = 描述“点击后会发生什么”，与按钮文本同语言。
+        // 不设 aria-pressed：本按钮是动作触发器（切到 X），不是当前语言的状态开关，
+        // 用 pressed 状态描述会让“已按下 + 切到另一种语言”的标签语义自相矛盾。
+        langSwitch.textContent = content.nav.langSwitch.text;
+        langSwitch.setAttribute('lang', content.nav.langSwitch.lang);
+        langSwitch.setAttribute('aria-label', content.nav.langSwitch.ariaLabel);
+        langSwitch.removeAttribute('aria-pressed');
+
+        applyCurrent();
         applyActive();
     }
 
@@ -112,7 +141,7 @@ export function initNavigation() {
         const siteShort = SITE_CONFIG.shortName;
         let pageName = null;
         if (page === 'news') {
-            pageName = content.updates.title;
+            pageName = content.newsPage.title;
         } else if (page === 'guide') {
             pageName = content.guide.title;
         }
@@ -130,7 +159,7 @@ export function initNavigation() {
     // —— 语言变更后的收尾处理 ——
     function onLanguageChanged(lang) {
         renderLinks();
-        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        document.documentElement.lang = STATE_LANG_ATTR[lang === 'en' ? 'en' : 'zh'];
         updateTitle(lang);
     }
 
